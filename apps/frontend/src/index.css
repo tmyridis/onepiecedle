@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background: url('/background.jpg') no-repeat 50% fixed;
+  background-size: cover;
+  background-color: '#eeecdb';
+}
+
+:root {
+  line-height: 1.5;
+
+  color-scheme: light dark;
+  color: #534e41 !important;
+  font-family: Ubuntu, Helvetica, Arial;
+  font-weight: 500;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
