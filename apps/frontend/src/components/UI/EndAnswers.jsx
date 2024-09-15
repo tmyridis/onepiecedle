@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import RopeBar from "./RopeBar";
+import { Link } from 'react-router-dom';
+import RopeBar from './RopeBar';
 
-function EndAnswers(props) {
+function EndAnswers({ gameState, to, type }) {
   return (
     <div
       className="flex justify-center items-center w-1/2 max-w-lg mx-auto mt-10 pb-40 mb-20 text-dark-grey-font text-center border-2 rounded-lg border-dark-grey bg-end-answers"
@@ -9,23 +9,26 @@ function EndAnswers(props) {
     >
       <div className="grid grid-cols-1 space-y-10">
         <div className="font-bold text-3xl pt-3">
-          {props.numTries === 1
-            ? "gg ez"
-            : props.numTries === 2
-            ? "nicee!"
-            : "Victory!"}
+          {gameState.numTries === 1
+            ? 'gg ez'
+            : gameState.numTries === 2
+            ? 'nicee!'
+            : 'Victory!'}
         </div>
         <div className="flex gap-x-3 justify-center">
-          <img src={props.todaysChar.image} className="border-2 rounded-lg" />
+          <img
+            src={gameState.todaysChar.image}
+            className="border-2 rounded-lg"
+          />
           <div className="pt-4">
             You guessed
             <div className="text-2xl font-extrabold">
-              {props.todaysChar.char_name}
+              {gameState.todaysChar.char_name}
             </div>
           </div>
         </div>
         <div>
-          Number of tries: <strong>{props.numTries}</strong>
+          Number of tries: <strong>{gameState.numTries}</strong>
         </div>
         <div className="font-bold text-xl">Next character in</div>
         {/* <div className="flex gap-3 sm:gap-1 flex-row h-36 rounded-lg pt-2 pr-3 sm:pt-0 sm:pr-0 text-dark-grey-font">
@@ -70,16 +73,16 @@ function EndAnswers(props) {
                   </div>
                 </div>
               </div> */}
-        {props.type === "wanted" && (
+        {type === 'wanted' && (
           <div className="px-10">
-            <img src={props.todaysChar.wanted_image} />
+            <img src={gameState.todaysChar.wanted_image} />
           </div>
         )}
         <div className="font-bold text-xl">Next mode:</div>
         <div className="font-bold text-xl">
           <div className="animate-bounce hover:animate-none">
-            <Link to={props.to}>
-              {props.to === "/classic" && (
+            <Link to={to}>
+              {to === '/classic' && (
                 <div className="w-96 relative text-center">
                   <img src="src\assets\gameButtonClassic.png" />
                   <div className="w-full absolute top-0 left-0 text-center mt-8">
@@ -90,7 +93,7 @@ function EndAnswers(props) {
                   </div>
                 </div>
               )}
-              {props.to === "/devilFruit" && (
+              {to === '/devilFruit' && (
                 <div className="w-96 relative text-center">
                   <img src="src\assets\gameButtonFruit.png" />
                   <div className="w-full absolute top-0 left-0 text-center mt-8">
@@ -103,7 +106,7 @@ function EndAnswers(props) {
                   </div>
                 </div>
               )}
-              {props.to === "/wanted" && (
+              {to === '/wanted' && (
                 <div className="w-96 relative text-center">
                   <img src="src\assets\gameButtonWanted.png" />
                   <div className="w-full absolute top-0 left-0 text-center mt-8">
@@ -114,7 +117,7 @@ function EndAnswers(props) {
                   </div>
                 </div>
               )}
-              {props.to === "/laugh" && (
+              {to === '/laugh' && (
                 <div className="flex justify-center">
                   <div className="w-96 relative text-center">
                     <img src="src\assets\gameButtonLaugh.png" />

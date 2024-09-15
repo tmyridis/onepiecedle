@@ -5,12 +5,12 @@ export const fetchClassicCharacters = async (
   setCharactersSelected
 ) => {
   try {
-    await fetch("http://localhost:5000/classic/characters")
+    await fetch('http://localhost:5000/classic/characters')
       .then((result) => result.json())
       .then((characters) => {
         // Get previous characters stored in local storage
         var classic_answers = JSON.parse(
-          localStorage.getItem("classic_answers")
+          localStorage.getItem('classic_answers')
         );
         console.log(characters);
 
@@ -48,7 +48,7 @@ export const fetchClassicCharacters = async (
 // Function to fetch todays random character
 export const fetchTodaysChar = async (setTodaysChar) => {
   try {
-    await fetch("http://localhost:5000/classic/todays_char")
+    await fetch('http://localhost:5000/classic/todays_char')
       .then((result) => result.json())
       .then((char) => {
         console.log(char);
@@ -62,7 +62,7 @@ export const fetchTodaysChar = async (setTodaysChar) => {
 // Function to fetch arcs
 export const fetchArcs = async (setArcs) => {
   try {
-    await fetch("http://localhost:5000/arcs")
+    await fetch('http://localhost:5000/arcs')
       .then((result) => result.json())
       .then((arcs) => {
         console.log(arcs);
@@ -76,11 +76,11 @@ export const fetchArcs = async (setArcs) => {
 // Function to fetch yesterdays character
 export const fetchYesterdaysChar = async (setYesterdaysChar) => {
   try {
-    await fetch("http://localhost:5000/yesterdays_char")
+    await fetch('http://localhost:5000/yesterdays_char')
       .then((result) => result.json())
       .then((char) => {
-        console.log(char["classic_char"].char_name);
-        setYesterdaysChar(char["classic_char"].char_name);
+        console.log(char['classic_char'].char_name);
+        setYesterdaysChar(char['classic_char'].char_name);
       });
   } catch (err) {
     console.log(err);

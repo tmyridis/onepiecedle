@@ -1,28 +1,29 @@
-function SearchInput(props) {
+function SearchInput({ gameState, onSubmitInput }) {
   // Function to handle changes while searching for character and outputting characters on the character list
   const onChangeSearchingInput = (target) => {
-    props.setInputName(target);
+    console.log(target);
+    gameState.updateInputName(target);
     var temp = [];
-    for (let char of props.availableCharacters) {
+    for (let char of gameState.availableCharacters) {
       if (char.char_name.toLowerCase().includes(target.toLowerCase())) {
         temp.push(char);
       }
     }
-    if (temp.length > 0 && target !== "") {
-      props.setSearchingNames(temp);
-      props.setNoCharacterFound(false);
+    if (temp.length > 0 && target !== '') {
+      gameState.updateSearchingNames(temp);
+      gameState.updateNoCharacterFound(false);
     } else {
-      props.setSearchingNames([]);
-      props.setNoCharacterFound(target !== "" ? true : false);
+      gameState.updateSearchingNames([]);
+      gameState.updateNoCharacterFound(target !== '' ? true : false);
     }
   };
 
   return (
     <div className="pt-5">
-      <form className="max-w-sm mx-auto" onSubmit={props.onSubmitInput}>
+      <form className="max-w-sm mx-auto" onSubmit={onSubmitInput}>
         <div className="relative">
           <input
-            value={props.inputName}
+            value={gameState.inputName}
             autoComplete="off"
             type="search"
             id="default-search"

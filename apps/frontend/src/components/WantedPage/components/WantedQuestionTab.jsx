@@ -1,11 +1,11 @@
-import LoadingSpinner from "../../UI/LoadingSpinner";
-import WantedEffectButtons from "./WantedEffectButtons";
-import WantedQuestionClues from "./WantedQuestionClues";
+import LoadingSpinner from '../../UI/LoadingSpinner';
+import WantedEffectButtons from './WantedEffectButtons';
+import WantedQuestionClues from './WantedQuestionClues';
 
-function WantedQuestionTab(props) {
+function WantedQuestionTab({ gameState, cluesState }) {
   return (
     <>
-      {props.todaysChar !== undefined ? (
+      {gameState.todaysChar !== undefined ? (
         <div className="flex justify-center items-center mt-40">
           <div className="grid grid-cols-1 border-4 border-dark-grey rounded w-96 bg-light-grey text-center p-4 space-y-5 text-dark-grey-font">
             <div className="text-lg font-semibold uppercase">
@@ -15,57 +15,48 @@ function WantedQuestionTab(props) {
               <div
                 className=""
                 style={{
-                  fontFamily: "Times New Roman, Times, serif",
-                  color: "#4f403d",
-                  fontWeight: "1000",
-                  transform: "scaleY(1.7)",
-                  fontSize: "3.5rem",
-                  userSelect: "none",
+                  fontFamily: 'Times New Roman, Times, serif',
+                  color: '#4f403d',
+                  fontWeight: '1000',
+                  transform: 'scaleY(1.7)',
+                  fontSize: '3.5rem',
+                  userSelect: 'none',
                 }}
               >
                 WANTED
               </div>
               <div className="flex justify-center pb-6 pt-5">
                 <img
-                  src={props.todaysChar.wanted_image[0]}
+                  src={gameState.todaysChar.wanted_image[0]}
                   style={{
-                    filter: `blur(${props.blurPixels}px) grayscale(${
-                      props.displayColors ? 0 : 1
+                    filter: `blur(${gameState.blurPixels}px) grayscale(${
+                      gameState.displayColors ? 0 : 1
                     })`,
-                    userSelect: "none",
-                    height: "200px",
-                    width: "304px",
+                    userSelect: 'none',
+                    height: '200px',
+                    width: '304px',
                   }}
                 />
               </div>
               <div
                 className="pt-2"
                 style={{
-                  fontFamily: "CenturyOldStyleStdBold",
-                  color: "#4f403d",
-                  fontWeight: "1000",
-                  transform: "scaleY(1.7)",
-                  fontSize: "2rem",
-                  userSelect: "none",
+                  fontFamily: 'CenturyOldStyleStdBold',
+                  color: '#4f403d',
+                  fontWeight: '1000',
+                  transform: 'scaleY(1.7)',
+                  fontSize: '2rem',
+                  userSelect: 'none',
                 }}
               >
                 DEAD OR ALIVE
               </div>
             </div>
             <WantedQuestionClues
-              numTries={props.numTries}
-              bountyClue={props.bountyClue}
-              bountyClueShow={props.bountyClueShow}
-              setBountyClueShow={props.setBountyClueShow}
-              todaysChar={props.todaysChar}
+              gameState={gameState}
+              cluesState={cluesState}
             />
-            <WantedEffectButtons
-              blurDisplay={props.blurDisplay}
-              setBlurPixels={props.setBlurPixels}
-              displayColors={props.displayColors}
-              setDisplayColors={props.setDisplayColors}
-              setBlurDisplay={props.setBlurDisplay}
-            />
+            <WantedEffectButtons gameState={gameState} />
           </div>
         </div>
       ) : (

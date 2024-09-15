@@ -1,146 +1,68 @@
-import { useEffect, useState } from "react";
-import Navbar from "../UI/Navbar";
-import EndAnswers from "../UI/EndAnswers";
-import { getTriesFromAnswers, subtractTillZero } from "../../lib/utilities";
-
+import { useEffect } from 'react';
+import Navbar from '../UI/Navbar';
+import EndAnswers from '../UI/EndAnswers';
 import {
   fetchYesterdaysChar,
   fetchTodaysChar,
   fetchWantedCharacters,
-} from "./hooks";
-import WantedQuestionTab from "./components/WantedQuestionTab";
-import WantedSearchInput from "./components/WantedSearchInput";
-import WantedSearchingNames from "./components/WantedSearchingNames";
-import NamesList from "../UI/NamesList";
+} from './hooks';
+import WantedQuestionTab from './components/WantedQuestionTab';
+import WantedSearchInput from './components/WantedSearchInput';
+import WantedSearchingNames from './components/WantedSearchingNames';
+import NamesList from '../UI/NamesList';
+import useGame from '../../hooks/useGame';
+import useClues from '../../hooks/useClues';
 
 function WantedPage() {
-  const [numTries, setNumTries] = useState(
-    getTriesFromAnswers("wanted_answers")
-  );
-  const [inputName, setInputName] = useState("");
-  const [searchingNames, setSearchingNames] = useState([]);
-  const [availableCharacters, setAvailableCharacters] = useState([]);
-  const [noCharacterFound, setNoCharacterFound] = useState(false);
-  const [charactersSelected, setCharactersSelected] = useState([]);
+  const wantedState = useGame('wanted');
 
-  const [foundChar, setFoundChar] = useState(
-    localStorage.getItem("wanted_found")
-      ? localStorage.getItem("wanted_found")
-      : false
-  );
-  const [blurPixels, setBlurPixels] = useState(
-    subtractTillZero(7.5, getTriesFromAnswers("wanted_answers"))
-  );
-  const [blurDisplay, setBlurDisplay] = useState(true);
-  const [displayColors, setDisplayColors] = useState(false);
-
-  const [todaysChar, setTodaysChar] = useState();
-
-  const [bountyClue, setBountyClue] = useState(
-    localStorage.getItem("wanted_found")
-      ? 0
-      : subtractTillZero(10, getTriesFromAnswers("wanted_answers"))
-  );
-
-  const [bountyClueShow, setBountyClueShow] = useState(false);
-
-  const [yesterdaysChar, setYesterdaysChar] = useState();
+  const cluesState = useClues('wanted');
 
   useEffect(() => {
     fetchWantedCharacters(
-      charactersSelected,
-      setAvailableCharacters,
-      setCharactersSelected
+      wantedState.charactersSelected,
+      wantedState.updateAvailableCharacters,
+      wantedState.updateCharactersSelected
     );
-    fetchTodaysChar(setTodaysChar);
-    fetchYesterdaysChar(setYesterdaysChar);
+    fetchTodaysChar(wantedState.updateTodaysChar);
+    fetchYesterdaysChar(wantedState.updateYesterdaysChar);
   }, []);
 
   useEffect(() => {
     setTimeout(function () {
-      const releventDiv = document.getElementById("foundChar");
+      const releventDiv = document.getElementById('foundChar');
       if (releventDiv) {
         releventDiv.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center",
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
         });
       }
     }, 2000);
-  }, [foundChar]);
+  }, [wantedState.foundChar]);
 
   return (
     <Navbar>
-      <WantedQuestionTab
-        todaysChar={todaysChar}
-        blurPixels={blurPixels}
-        displayColors={displayColors}
-        numTries={numTries}
-        bountyClue={bountyClue}
-        bountyClueShow={bountyClueShow}
-        setBountyClueShow={setBountyClueShow}
-        blurDisplay={blurDisplay}
-        setDisplayColors={setDisplayColors}
-        setBlurPixels={setBlurPixels}
-        setBlurDisplay={setBlurDisplay}
-      />
-      {!foundChar && todaysChar !== undefined && (
-        <WantedSearchInput
-          charactersSelected={charactersSelected}
-          availableCharacters={availableCharacters}
-          setAvailableCharacters={setAvailableCharacters}
-          setCharactersSelected={setCharactersSelected}
-          inputName={inputName}
-          setSearchingNames={setSearchingNames}
-          searchingNames={searchingNames}
-          setInputName={setInputName}
-          setNoCharacterFound={setNoCharacterFound}
-          todaysChar={todaysChar}
-          bountyClue={bountyClue}
-          setBountyClue={setBountyClue}
-          numTries={numTries}
-          setNumTries={setNumTries}
-          setBlurPixels={setBlurPixels}
-          setFoundChar={setFoundChar}
-        />
+      <WantedQuestionTab gameState={wantedState} cluesState={cluesState} />
+      {!wantedState.foundChar && wantedState.todaysChar !== undefined && (
+        <WantedSearchInput gameState={wantedState} cluesState={cluesState} />
       )}
-      {todaysChar !== undefined && (
+      {wantedState.todaysChar !== undefined && (
         <div className="relative">
           <WantedSearchingNames
-            charactersSelected={charactersSelected}
-            availableCharacters={availableCharacters}
-            setAvailableCharacters={setAvailableCharacters}
-            setCharactersSelected={setCharactersSelected}
-            setSearchingNames={setSearchingNames}
-            searchingNames={searchingNames}
-            setInputName={setInputName}
-            todaysChar={todaysChar}
-            bountyClue={bountyClue}
-            setBountyClue={setBountyClue}
-            numTries={numTries}
-            setNumTries={setNumTries}
-            setBlurPixels={setBlurPixels}
-            setFoundChar={setFoundChar}
-            noCharacterFound={noCharacterFound}
+            gameState={wantedState}
+            cluesState={cluesState}
           />
-          {charactersSelected.length > 0 && (
-            <NamesList
-              charactersSelected={charactersSelected}
-              todaysChar={todaysChar}
-            />
+          {wantedState.charactersSelected.length > 0 && (
+            <NamesList gameState={wantedState} />
           )}
-          {foundChar && (
-            <EndAnswers
-              todaysChar={todaysChar}
-              numTries={numTries}
-              to={"/laugh"}
-              type={"wanted"}
-            />
+          {wantedState.foundChar && (
+            <EndAnswers gameState={wantedState} to={'/laugh'} type={'wanted'} />
           )}
-          {yesterdaysChar !== undefined && (
+          {wantedState.yesterdaysChar !== undefined && (
             <div className="flex justify-center items-center font-black text-xl pt-20 mb-20">
               <div>Yesterday's character was &nbsp;</div>
-              <div className="text-orange">{yesterdaysChar}</div>
+              <div className="text-orange">{wantedState.yesterdaysChar}</div>
             </div>
           )}
           <div className="h-28"></div>

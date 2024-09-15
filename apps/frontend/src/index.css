@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  background: url('/background.jpg') no-repeat 50% fixed;
+  background: url('/background.webp') no-repeat 50% fixed;
   background-size: cover;
   background-color: '#eeecdb';
 }

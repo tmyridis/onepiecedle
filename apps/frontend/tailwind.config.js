@@ -24,7 +24,6 @@ module.exports = {
         "clue-border": "#928157"
       },
       backgroundImage: {
-        'background': "url('/background2.jpg')",
         'wanted-poster': "url(src/assets/wantedBackground.png)",
       },
       keyframes: {

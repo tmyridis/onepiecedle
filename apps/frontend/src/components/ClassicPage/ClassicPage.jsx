@@ -1,62 +1,27 @@
-import { useEffect, useState } from "react";
-import Navbar from "../UI/Navbar";
-import EndAnswers from "../UI/EndAnswers";
-import { getTriesFromAnswers, subtractTillZero } from "../../lib/utilities";
-import ClassicSearchInput from "./components/ClassicSearchInput";
-import ClassicSearchingNames from "./components/ClassicSearchingNames";
-import ClassicQuestionTab from "./components/ClassicQuestionTab";
-import CharacterTable from "./components/CharacterTable";
-import ColorIndicators from "./components/ColorIndicators";
+import { useEffect } from 'react';
+import Navbar from '../UI/Navbar';
+import EndAnswers from '../UI/EndAnswers';
+import ClassicSearchInput from './components/ClassicSearchInput';
+import ClassicSearchingNames from './components/ClassicSearchingNames';
+import ClassicQuestionTab from './components/ClassicQuestionTab';
+import CharacterTable from './components/CharacterTable';
+import ColorIndicators from './components/ColorIndicators';
 import {
   fetchTodaysChar,
   fetchArcs,
   fetchYesterdaysChar,
   fetchClassicCharacters,
-} from "./hooks";
+} from './hooks';
+import useGame from '../../hooks/useGame';
+import useClues from '../../hooks/useClues';
 
 function ClassicPage() {
-  const [searchingNames, setSearchingNames] = useState([]);
-  const [availableCharacters, setAvailableCharacters] = useState([]);
-  const [inputName, setInputName] = useState("");
-  const [noCharacterFound, setNoCharacterFound] = useState(false);
-  const [charactersSelected, setCharactersSelected] = useState([]);
-  const [todaysChar, setTodaysChar] = useState();
-  const [yesterdaysChar, setYesterdaysChar] = useState();
-  const [foundChar, setFoundChar] = useState(
-    localStorage.getItem("classic_found")
-      ? localStorage.getItem("classic_found")
-      : false
-  );
-  const [arcs, setArcs] = useState([]);
-  const [numTries, setNumTries] = useState(
-    getTriesFromAnswers("classic_answers")
-  );
-
-  const [firstApparitionClue, setFirstApparitionClue] = useState(
-    localStorage.getItem("classic_found")
-      ? 0
-      : subtractTillZero(6, getTriesFromAnswers("classic_answers"))
-  );
-  const [devilFruitClue, setDevilFruitClue] = useState(
-    localStorage.getItem("classic_found")
-      ? 0
-      : subtractTillZero(9, getTriesFromAnswers("classic_answers"))
-  );
-
-  const [firstApparitionClueShow, setFirstApparitionClueShow] = useState(false);
-  const [devilFruitClueShow, setDevilFruitClueShow] = useState(false);
-
-  const [colorIndicators, setColorIndicators] = useState(false);
-
-  const [infiniteMode, setInfiniteMode] = useState(
-    localStorage.getItem("infinite") !== null
-      ? JSON.parse(localStorage.getItem("infinite"))
-      : false
-  );
+  const classicState = useGame('classic');
+  const cluesState = useClues('classic');
 
   const fetchRandomChar = async () => {
     try {
-      await fetch("http://localhost:5000/classic/random_char")
+      await fetch('http://localhost:5000/classic/random_char')
         .then((result) => result.json())
         .then((char) => {
           console.log(char);
@@ -67,112 +32,56 @@ function ClassicPage() {
   };
 
   useEffect(() => {
-    if (infiniteMode === true) {
-      fetchRandomChar();
-    }
-  }, [infiniteMode]);
-
-  useEffect(() => {
     fetchClassicCharacters(
-      charactersSelected,
-      setAvailableCharacters,
-      setCharactersSelected
+      classicState.charactersSelected,
+      classicState.updateAvailableCharacters,
+      classicState.updateCharactersSelected
     );
-    fetchArcs(setArcs);
-    fetchTodaysChar(setTodaysChar);
-    fetchYesterdaysChar(setYesterdaysChar);
+    fetchArcs(classicState.updateArcs);
+    fetchTodaysChar(classicState.updateTodaysChar);
+    fetchYesterdaysChar(classicState.updateYesterdaysChar);
   }, []);
 
   useEffect(() => {
     setTimeout(function () {
-      const releventDiv = document.getElementById("foundChar");
+      const releventDiv = document.getElementById('foundChar');
       if (releventDiv) {
         releventDiv.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center",
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
         });
       }
     }, 2000);
-  }, [foundChar]);
+  }, [classicState.foundChar]);
 
   return (
-    <Navbar infiniteMode={infiniteMode} setInfiniteMode={setInfiniteMode}>
-      <ClassicQuestionTab
-        numTries={numTries}
-        todaysChar={todaysChar}
-        firstApparitionClue={firstApparitionClue}
-        setFirstApparitionClueShow={setFirstApparitionClueShow}
-        firstApparitionClueShow={firstApparitionClueShow}
-        devilFruitClue={devilFruitClue}
-        setDevilFruitClueShow={setDevilFruitClueShow}
-        devilFruitClueShow={devilFruitClueShow}
-      />
-      {!foundChar && todaysChar !== undefined && (
-        <ClassicSearchInput
-          inputName={inputName}
-          numTries={numTries}
-          setNumTries={setNumTries}
-          setColorIndicators={setColorIndicators}
-          charactersSelected={charactersSelected}
-          setCharactersSelected={setCharactersSelected}
-          availableCharacters={availableCharacters}
-          setAvailableCharacters={setAvailableCharacters}
-          setSearchingNames={setSearchingNames}
-          setInputName={setInputName}
-          setNoCharacterFound={setNoCharacterFound}
-          todaysChar={todaysChar}
-          setFirstApparitionClue={setFirstApparitionClue}
-          setDevilFruitClue={setDevilFruitClue}
-          firstApparitionClue={firstApparitionClue}
-          devilFruitClue={devilFruitClue}
-          setFoundChar={setFoundChar}
-        />
+    <Navbar>
+      <ClassicQuestionTab gameState={classicState} cluesState={cluesState} />
+      {!classicState.foundChar && classicState.todaysChar !== undefined && (
+        <ClassicSearchInput gameState={classicState} cluesState={cluesState} />
       )}
-      {todaysChar !== undefined ? (
+      {classicState.todaysChar !== undefined ? (
         <div className="relative">
           <ClassicSearchingNames
-            numTries={numTries}
-            setNumTries={setNumTries}
-            setColorIndicators={setColorIndicators}
-            charactersSelected={charactersSelected}
-            setCharactersSelected={setCharactersSelected}
-            availableCharacters={availableCharacters}
-            setAvailableCharacters={setAvailableCharacters}
-            setSearchingNames={setSearchingNames}
-            searchingNames={searchingNames}
-            setInputName={setInputName}
-            todaysChar={todaysChar}
-            setFirstApparitionClue={setFirstApparitionClue}
-            setDevilFruitClue={setDevilFruitClue}
-            firstApparitionClue={firstApparitionClue}
-            devilFruitClue={devilFruitClue}
-            setFoundChar={setFoundChar}
-            noCharacterFound={noCharacterFound}
+            gameState={classicState}
+            cluesState={cluesState}
           />
-          {charactersSelected.length > 0 && (
+          {classicState.charactersSelected.length > 0 && (
             <>
-              <CharacterTable
-                charactersSelected={charactersSelected}
-                todaysChar={todaysChar}
-                arcs={arcs}
-              />
-              {colorIndicators && (
-                <ColorIndicators setColorIndicators={setColorIndicators} />
+              <CharacterTable gameState={classicState} />
+              {classicState.colorIndicators && (
+                <ColorIndicators gameState={classicState} />
               )}
             </>
           )}
-          {foundChar && (
-            <EndAnswers
-              todaysChar={todaysChar}
-              numTries={numTries}
-              to={"/devilFruit"}
-            />
+          {classicState.foundChar && (
+            <EndAnswers gameState={classicState} to={'/devilFruit'} />
           )}
-          {yesterdaysChar !== undefined && (
+          {classicState.yesterdaysChar !== undefined && (
             <div className="flex justify-center items-center font-black text-xl pt-20 mb-20">
               <div>Yesterday's character was &nbsp;</div>
-              <div className="text-orange">{yesterdaysChar}</div>
+              <div className="text-orange">{classicState.yesterdaysChar}</div>
             </div>
           )}
         </div>

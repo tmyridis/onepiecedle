@@ -1,156 +1,81 @@
-import { useEffect, useState } from "react";
-import Navbar from "../UI/Navbar";
-import EndAnswers from "../UI/EndAnswers";
-import { getTriesFromAnswers, subtractTillZero } from "../../lib/utilities";
-import DevilFruitQuestionTab from "./components/DevilFruitQuestionTab";
-import DevilFruitSearchInput from "./components/DevilFruitSearchInput";
-import DevilFruitSearchingNames from "./components/DevilFruitSearchingNames";
-import NamesList from "../UI/NamesList";
+import { useEffect } from 'react';
+import Navbar from '../UI/Navbar';
+import EndAnswers from '../UI/EndAnswers';
+import DevilFruitQuestionTab from './components/DevilFruitQuestionTab';
+import DevilFruitSearchInput from './components/DevilFruitSearchInput';
+import DevilFruitSearchingNames from './components/DevilFruitSearchingNames';
+import NamesList from '../UI/NamesList';
 import {
   fetchFruitCharacters,
   fetchTodaysChar,
   fetchYesterdaysChar,
-} from "./hooks";
+} from './hooks';
+
+import useGame from '../../hooks/useGame';
+import useClues from '../../hooks/useClues';
 
 function DevilFruitPage() {
-  const [numTries, setNumTries] = useState(
-    getTriesFromAnswers("fruit_answers")
-  );
-  const [inputName, setInputName] = useState("");
-  const [searchingNames, setSearchingNames] = useState([]);
-  const [availableCharacters, setAvailableCharacters] = useState([]);
-  const [noCharacterFound, setNoCharacterFound] = useState(false);
-  const [charactersSelected, setCharactersSelected] = useState([]);
-  const [foundChar, setFoundChar] = useState(
-    localStorage.getItem("fruit_found")
-      ? localStorage.getItem("fruit_found")
-      : false
-  );
+  const devilFruitState = useGame('fruit');
 
-  const [todaysChar, setTodaysChar] = useState();
-  const [yesterdaysChar, setYesterdaysChar] = useState();
-
-  const [typeClue, setTypeClue] = useState(
-    localStorage.getItem("fruit_found")
-      ? 0
-      : subtractTillZero(4, getTriesFromAnswers("fruit_answers"))
-  );
-  const [translateClue, setTranslateClue] = useState(
-    localStorage.getItem("fruit_found")
-      ? 0
-      : subtractTillZero(7, getTriesFromAnswers("fruit_answers"))
-  );
-  const [explanationClue, setExplanationClue] = useState(
-    localStorage.getItem("fruit_found")
-      ? 0
-      : subtractTillZero(13, getTriesFromAnswers("fruit_answers"))
-  );
-
-  const [typeClueShow, setTypeClueShow] = useState(false);
-  const [translateClueShow, setTranslateClueShow] = useState(false);
-  const [explanationClueShow, setExplanationClueShow] = useState(false);
+  const cluesState = useClues('fruit');
 
   useEffect(() => {
     fetchFruitCharacters(
-      charactersSelected,
-      setAvailableCharacters,
-      setCharactersSelected
+      devilFruitState.charactersSelected,
+      devilFruitState.updateAvailableCharacters,
+      devilFruitState.updateCharactersSelected
     );
-    fetchTodaysChar(setTodaysChar);
-    fetchYesterdaysChar(setYesterdaysChar);
+    fetchTodaysChar(devilFruitState.updateTodaysChar);
+    fetchYesterdaysChar(devilFruitState.updateYesterdaysChar);
   }, []);
 
   useEffect(() => {
     setTimeout(function () {
-      const releventDiv = document.getElementById("foundChar");
+      const releventDiv = document.getElementById('foundChar');
       if (releventDiv) {
         releventDiv.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center",
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
         });
       }
     }, 2000);
-  }, [foundChar]);
+  }, [devilFruitState.foundChar]);
 
   return (
     <Navbar>
       <DevilFruitQuestionTab
-        todaysChar={todaysChar}
-        typeClue={typeClue}
-        translateClue={translateClue}
-        explanationClue={explanationClue}
-        typeClueShow={typeClueShow}
-        translateClueShow={translateClueShow}
-        explanationClueShow={explanationClueShow}
-        setTranslateClueShow={setTranslateClueShow}
-        setTypeClueShow={setTypeClueShow}
-        setExplanationClueShow={setExplanationClueShow}
+        gameState={devilFruitState}
+        cluesState={cluesState}
       />
-      {!foundChar && todaysChar !== undefined && (
-        <DevilFruitSearchInput
-          inputName={inputName}
-          numTries={numTries}
-          setNumTries={setNumTries}
-          charactersSelected={charactersSelected}
-          setCharactersSelected={setCharactersSelected}
-          availableCharacters={availableCharacters}
-          setAvailableCharacters={setAvailableCharacters}
-          setSearchingNames={setSearchingNames}
-          setInputName={setInputName}
-          setNoCharacterFound={setNoCharacterFound}
-          todaysChar={todaysChar}
-          typeClue={typeClue}
-          translateClue={translateClue}
-          explanationClue={explanationClue}
-          setTypeClue={setTypeClue}
-          setTranslateClue={setTranslateClue}
-          setExplanationClue={setExplanationClue}
-          setFoundChar={setFoundChar}
-        />
-      )}
-      {todaysChar !== undefined && (
+      {!devilFruitState.foundChar &&
+        devilFruitState.todaysChar !== undefined && (
+          <DevilFruitSearchInput
+            gameState={devilFruitState}
+            cluesState={cluesState}
+          />
+        )}
+      {devilFruitState.todaysChar !== undefined && (
         <div className="relative">
           <DevilFruitSearchingNames
-            numTries={numTries}
-            setNumTries={setNumTries}
-            charactersSelected={charactersSelected}
-            setCharactersSelected={setCharactersSelected}
-            availableCharacters={availableCharacters}
-            setAvailableCharacters={setAvailableCharacters}
-            setSearchingNames={setSearchingNames}
-            searchingNames={searchingNames}
-            setInputName={setInputName}
-            todaysChar={todaysChar}
-            typeClue={typeClue}
-            translateClue={translateClue}
-            explanationClue={explanationClue}
-            setTypeClue={setTypeClue}
-            setTranslateClue={setTranslateClue}
-            setExplanationClue={setExplanationClue}
-            setFoundChar={setFoundChar}
-            noCharacterFound={noCharacterFound}
+            gameState={devilFruitState}
+            cluesState={cluesState}
           />
-          {charactersSelected.length > 0 && (
-            <NamesList
-              charactersSelected={charactersSelected}
-              todaysChar={todaysChar}
-            />
+          {devilFruitState.charactersSelected.length > 0 && (
+            <NamesList gameState={devilFruitState} />
           )}
-          {foundChar && (
-            <EndAnswers
-              todaysChar={todaysChar}
-              numTries={numTries}
-              to={"/wanted"}
-            />
+          {devilFruitState.foundChar && (
+            <EndAnswers gameState={devilFruitState} to={'/wanted'} />
           )}
-          {yesterdaysChar !== undefined && (
+          {devilFruitState.yesterdaysChar !== undefined && (
             <div className="flex justify-center items-center font-black text-xl pt-20">
               <div>Yesterday's character was &nbsp;</div>
-              <div className="text-orange">{yesterdaysChar}</div>
+              <div className="text-orange">
+                {devilFruitState.yesterdaysChar}
+              </div>
             </div>
           )}
-          <div className="mb-40"></div>
+          <div className="h-28"></div>
         </div>
       )}
     </Navbar>

@@ -1,165 +1,87 @@
-import { useEffect, useRef, useState } from "react";
-import Navbar from "../UI/Navbar";
-import EndAnswers from "../UI/EndAnswers";
-import { getTriesFromAnswers, subtractTillZero } from "../../lib/utilities";
-
+import { useEffect, useRef } from 'react';
+import Navbar from '../UI/Navbar';
+import EndAnswers from '../UI/EndAnswers';
 import {
   fetchLaughCharacters,
   fetchTodaysChar,
   fetchYesterdaysChar,
-} from "./hooks";
-import LaughQuestionTab from "./components/LaughQuestionTab";
-import LaughSearchInput from "./components/LaughSearchInput";
-import LaughSearchingNames from "./components/LaughSearchingNames";
-import NamesList from "../UI/NamesList";
+} from './hooks';
+import LaughQuestionTab from './components/LaughQuestionTab';
+import LaughSearchInput from './components/LaughSearchInput';
+import LaughSearchingNames from './components/LaughSearchingNames';
+import NamesList from '../UI/NamesList';
+import useGame from '../../hooks/useGame';
+import useClues from '../../hooks/useClues';
 
 function LaughPage() {
-  const [numTries, setNumTries] = useState(
-    getTriesFromAnswers("laugh_answers")
-  );
-  const [inputName, setInputName] = useState("");
-  const [searchingNames, setSearchingNames] = useState([]);
-  const [availableCharacters, setAvailableCharacters] = useState([]);
-  const [noCharacterFound, setNoCharacterFound] = useState(false);
-  const [charactersSelected, setCharactersSelected] = useState([]);
+  const laughState = useGame('laugh');
+  const cluesState = useClues('laugh');
 
-  const [foundChar, setFoundChar] = useState(
-    localStorage.getItem("laugh_found")
-      ? localStorage.getItem("laugh_found")
-      : false
-  );
-
-  const [todaysChar, setTodaysChar] = useState();
-
-  const [originClue, setOriginClue] = useState(
-    localStorage.getItem("laugh_found")
-      ? 0
-      : subtractTillZero(4, getTriesFromAnswers("laugh_answers"))
-  );
-  const [affiliationClue, setAffiliationClue] = useState(
-    localStorage.getItem("laugh_found")
-      ? 0
-      : subtractTillZero(9, getTriesFromAnswers("laugh_answers"))
-  );
-
-  const [originClueShow, setOriginClueShow] = useState(false);
-  const [affiliationClueShow, setAffiliationClueShow] = useState(false);
-
-  const [yesterdaysChar, setYesterdaysChar] = useState();
-
-  const [isPlayingLaugh, setIsPlayingLaugh] = useState(false);
   const audioElement = useRef();
 
   const onPlayPauseEvent = () => {
-    setIsPlayingLaugh(!isPlayingLaugh);
+    laughState.updatePlayingLaugh(!laughState.isPlayingLaugh);
   };
 
   useEffect(() => {
-    if (todaysChar !== undefined) {
-      if (isPlayingLaugh) {
+    if (laughState.todaysChar !== undefined) {
+      if (laughState.isPlayingLaugh) {
+        console.log('playing');
         audioElement.current.play();
       } else {
         audioElement.current.pause();
         audioElement.current.currentTime = 0;
       }
     }
-  }, [isPlayingLaugh]);
+  }, [laughState.isPlayingLaugh]);
 
   useEffect(() => {
     fetchLaughCharacters(
-      charactersSelected,
-      setAvailableCharacters,
-      setCharactersSelected
+      laughState.charactersSelected,
+      laughState.updateAvailableCharacters,
+      laughState.updateCharactersSelected
     );
-    fetchTodaysChar(setTodaysChar);
-    fetchYesterdaysChar(setYesterdaysChar);
+    fetchTodaysChar(laughState.updateTodaysChar);
+    fetchYesterdaysChar(laughState.updateYesterdaysChar);
   }, []);
 
   useEffect(() => {
     setTimeout(function () {
-      const releventDiv = document.getElementById("foundChar");
+      const releventDiv = document.getElementById('foundChar');
       if (releventDiv) {
         releventDiv.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center",
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
         });
       }
     }, 2000);
-  }, [foundChar]);
+  }, [laughState.foundChar]);
 
   return (
     <Navbar>
       <LaughQuestionTab
-        originClue={originClue}
-        originClueShow={originClueShow}
-        setOriginClueShow={setOriginClueShow}
-        affiliationClue={affiliationClue}
-        affiliationClueShow={affiliationClueShow}
-        setAffiliationClueShow={setAffiliationClueShow}
-        todaysChar={todaysChar}
-        isPlayingLaugh={isPlayingLaugh}
+        gameState={laughState}
+        cluesState={cluesState}
         onPlayPauseEvent={onPlayPauseEvent}
         audioElement={audioElement}
       />
-      {!foundChar && todaysChar !== undefined && (
-        <LaughSearchInput
-          inputName={inputName}
-          charactersSelected={charactersSelected}
-          availableCharacters={availableCharacters}
-          setAvailableCharacters={setAvailableCharacters}
-          setCharactersSelected={setCharactersSelected}
-          setSearchingNames={setSearchingNames}
-          setInputName={setInputName}
-          setNoCharacterFound={setNoCharacterFound}
-          todaysChar={todaysChar}
-          setOriginClue={setOriginClue}
-          setAffiliationClue={setAffiliationClue}
-          originClue={originClue}
-          affiliationClue={affiliationClue}
-          numTries={numTries}
-          setNumTries={setNumTries}
-          setFoundChar={setFoundChar}
-        />
+      {!laughState.foundChar && laughState.todaysChar !== undefined && (
+        <LaughSearchInput gameState={laughState} cluesState={cluesState} />
       )}
-      {todaysChar !== undefined && (
+      {laughState.todaysChar !== undefined && (
         <div className="relative">
-          <LaughSearchingNames
-            inputName={inputName}
-            charactersSelected={charactersSelected}
-            availableCharacters={availableCharacters}
-            setAvailableCharacters={setAvailableCharacters}
-            setCharactersSelected={setCharactersSelected}
-            setSearchingNames={setSearchingNames}
-            searchingNames={searchingNames}
-            setInputName={setInputName}
-            noCharacterFound={noCharacterFound}
-            todaysChar={todaysChar}
-            setOriginClue={setOriginClue}
-            setAffiliationClue={setAffiliationClue}
-            originClue={originClue}
-            affiliationClue={affiliationClue}
-            numTries={numTries}
-            setNumTries={setNumTries}
-            setFoundChar={setFoundChar}
-          />
-          {charactersSelected.length > 0 && (
-            <NamesList
-              charactersSelected={charactersSelected}
-              todaysChar={todaysChar}
-            />
+          <LaughSearchingNames gameState={laughState} cluesState={cluesState} />
+          {laughState.charactersSelected.length > 0 && (
+            <NamesList gameState={laughState} />
           )}
-          {foundChar && (
-            <EndAnswers
-              todaysChar={todaysChar}
-              numTries={numTries}
-              to={"/classic"}
-            />
+          {laughState.foundChar && (
+            <EndAnswers gameState={laughState} to={'/classic'} />
           )}
-          {yesterdaysChar !== undefined && (
+          {laughState.yesterdaysChar !== undefined && (
             <div className="flex justify-center items-center font-black text-xl pt-20 mb-20">
               <div>Yesterday's character was &nbsp;</div>
-              <div className="text-orange">{yesterdaysChar}</div>
+              <div className="text-orange">{laughState.yesterdaysChar}</div>
             </div>
           )}
           <div className="h-28"></div>
