@@ -1,14 +1,20 @@
+import {
+  getFoundCharFromStorage,
+  getTriesFromAnswers,
+  subtractTillZero,
+} from '../../../lib/utilities';
+
 export const fetchLaughCharacters = async (
   charactersSelected,
   setAvailableCharacters,
   setCharactersSelected
 ) => {
   try {
-    await fetch("http://localhost:5000/laugh/characters")
+    await fetch('http://localhost:5000/laugh/characters')
       .then((result) => result.json())
       .then((characters) => {
         // Get previous characters stored in local storage
-        var laugh_answers = JSON.parse(localStorage.getItem("laugh_answers"));
+        var laugh_answers = JSON.parse(localStorage.getItem('laugh_answers'));
         console.log(characters);
 
         // Remove characters that already had been stored in local storage from available characters
@@ -45,11 +51,11 @@ export const fetchLaughCharacters = async (
 // Function to fetch yesterdays random character
 export const fetchYesterdaysChar = async (setYesterdaysChar) => {
   try {
-    await fetch("http://localhost:5000/yesterdays_char")
+    await fetch('http://localhost:5000/yesterdays_char')
       .then((result) => result.json())
       .then((char) => {
-        console.log(char["laugh_char"].char_name);
-        setYesterdaysChar(char["laugh_char"].char_name);
+        console.log(char['laugh_char'].char_name);
+        setYesterdaysChar(char['laugh_char'].char_name);
       });
   } catch (err) {
     console.log(err);
@@ -57,13 +63,35 @@ export const fetchYesterdaysChar = async (setYesterdaysChar) => {
 };
 
 // Function to fetch todays random character
-export const fetchTodaysChar = async (setTodaysChar) => {
+export const fetchTodaysChar = async (
+  setTodaysChar,
+  setFoundChar,
+  cluesState
+) => {
   try {
-    await fetch("http://localhost:5000/laugh/todays_char")
+    await fetch('http://localhost:5000/laugh/todays_char')
       .then((result) => result.json())
       .then((char) => {
         console.log(char);
         setTodaysChar(char);
+        const foundChar = getFoundCharFromStorage(
+          char.char_name,
+          'laugh_answers'
+        );
+        console.log(foundChar);
+        setFoundChar(foundChar);
+
+        cluesState.updateOriginClue(
+          foundChar
+            ? 0
+            : subtractTillZero(4, getTriesFromAnswers('laugh_answers'))
+        );
+
+        cluesState.updateAffiliationClue(
+          foundChar
+            ? 0
+            : subtractTillZero(9, getTriesFromAnswers('laugh_answers'))
+        );
       });
   } catch (err) {
     console.log(err);

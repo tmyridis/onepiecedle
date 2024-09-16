@@ -14,10 +14,12 @@ import {
 } from './hooks';
 import useGame from '../../hooks/useGame';
 import useClues from '../../hooks/useClues';
+import useTime from '../../hooks/useTime';
 
 function ClassicPage() {
   const classicState = useGame('classic');
   const cluesState = useClues('classic');
+  const time = useTime();
 
   const fetchRandomChar = async () => {
     try {
@@ -38,7 +40,11 @@ function ClassicPage() {
       classicState.updateCharactersSelected
     );
     fetchArcs(classicState.updateArcs);
-    fetchTodaysChar(classicState.updateTodaysChar);
+    fetchTodaysChar(
+      classicState.updateTodaysChar,
+      classicState.updateFoundChar,
+      cluesState
+    );
     fetchYesterdaysChar(classicState.updateYesterdaysChar);
   }, []);
 

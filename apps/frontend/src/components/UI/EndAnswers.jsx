@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import RopeBar from './RopeBar';
+import Timer from './Timer';
 
 function EndAnswers({ gameState, to, type }) {
   return (
@@ -7,7 +8,7 @@ function EndAnswers({ gameState, to, type }) {
       className="flex justify-center items-center w-1/2 max-w-lg mx-auto mt-10 pb-40 mb-20 text-dark-grey-font text-center border-2 rounded-lg border-dark-grey bg-end-answers"
       id="foundChar"
     >
-      <div className="grid grid-cols-1 space-y-10">
+      <div className="grid grid-cols-1 space-y-7">
         <div className="font-bold text-3xl pt-3">
           {gameState.numTries === 1
             ? 'gg ez'
@@ -31,48 +32,7 @@ function EndAnswers({ gameState, to, type }) {
           Number of tries: <strong>{gameState.numTries}</strong>
         </div>
         <div className="font-bold text-xl">Next character in</div>
-        {/* <div className="flex gap-3 sm:gap-1 flex-row h-36 rounded-lg pt-2 pr-3 sm:pt-0 sm:pr-0 text-dark-grey-font">
-                <div className="flex justify-end sm:w-32 w-16">
-                  <div className="h-16 sm:h-20">
-                    <div className="h-[60px] flex justify-center sm:text-3xl text-xl">
-                      <div
-                        className={
-                          countDownTime?.hours >= 0 &&
-                          countDownTime?.minutes == 59 &&
-                          countDownTime?.seconds == 59
-                            ? "animate-timer"
-                            : ""
-                        }
-                      >
-                        {countDownTime?.hours}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-center sm:w-32 w-16">
-                  <div className="h-16 sm:h-20">
-                    <div className="h-[60px] flex justify-center sm:text-3xl text-xl">
-                      <div
-                        className={
-                          countDownTime?.minutes >= 0 &&
-                          countDownTime?.seconds == 59
-                            ? "animate-timer"
-                            : ""
-                        }
-                      >
-                        {countDownTime?.minutes}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-left sm:w-32 w-16">
-                  <div className="h-16 sm:h-20">
-                    <div className="h-[60px] flex justify-center sm:text-3xl text-xl">
-                      <div ref={secondTimer}>{countDownTime?.seconds}</div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+        <Timer />
         {type === 'wanted' && (
           <div className="px-10">
             <img src={gameState.todaysChar.wanted_image} />

@@ -13,10 +13,11 @@ import {
 
 import useGame from '../../hooks/useGame';
 import useClues from '../../hooks/useClues';
+import useTime from '../../hooks/useTime';
 
 function DevilFruitPage() {
   const devilFruitState = useGame('fruit');
-
+  const time = useTime();
   const cluesState = useClues('fruit');
 
   useEffect(() => {
@@ -25,7 +26,11 @@ function DevilFruitPage() {
       devilFruitState.updateAvailableCharacters,
       devilFruitState.updateCharactersSelected
     );
-    fetchTodaysChar(devilFruitState.updateTodaysChar);
+    fetchTodaysChar(
+      devilFruitState.updateTodaysChar,
+      devilFruitState.updateFoundChar,
+      cluesState
+    );
     fetchYesterdaysChar(devilFruitState.updateYesterdaysChar);
   }, []);
 

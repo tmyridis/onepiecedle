@@ -1,5 +1,5 @@
 function isObject(object) {
-  return object != null && typeof object === "object";
+  return object != null && typeof object === 'object';
 }
 
 // Function to return length of answers for each key mode
@@ -29,15 +29,15 @@ export const objectComparison = (obj1, obj2) => {
     console.log(val1, val2, val1 === val2);
 
     // FIX LAUGH IMAGE COMPARISON
-    if (props1[i] === "laugh") {
+    if (props1[i] === 'laugh') {
       continue;
     }
     // FIX WANTED IMAGE COMPARISON
-    if (props1[i] === "wanted_image") {
+    if (props1[i] === 'wanted_image') {
       continue;
     }
     // FIX HAKI COMPARISON
-    if (props1[i] === "haki") {
+    if (props1[i] === 'haki') {
       continue;
     }
     let isObjects = isObject(val1) && isObject(val2);
@@ -91,13 +91,13 @@ export const attributeComparison = (obj1, obj2, att) => {
 export const convertToBellyCurrencySystem = (labelValue) => {
   // Nine Zeroes for Billions
   return Math.abs(Number(labelValue)) >= 1.0e9
-    ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(1) + "B"
+    ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(1) + 'B'
     : // Six Zeroes for Millions
     Math.abs(Number(labelValue)) >= 1.0e6
-    ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(0) + "M"
+    ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(0) + 'M'
     : // Three Zeroes for Thousands
     Math.abs(Number(labelValue)) >= 1.0e3
-    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(1) + "K"
+    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(1) + 'K'
     : Math.abs(Number(labelValue));
 };
 
@@ -115,18 +115,27 @@ export const superiorAttribute = (object, target, attribute) => {
 // Function to compare object and target "first_arc" attribute and check for superior / inferior / match.
 export const arcComparison = (object, target, arcs) => {
   // Exact match attribute value
-  if (object["first_arc"] === target["first_arc"]) {
+  if (object['first_arc'] === target['first_arc']) {
     return 0;
   }
   var objectArc = arcs.find(
-    (arcObj) => arcObj.arc_name === object["first_arc"]
-  )["arc_order"];
+    (arcObj) => arcObj.arc_name === object['first_arc']
+  )['arc_order'];
   var targetArc = arcs.find(
-    (arcObj) => arcObj.arc_name === target["first_arc"]
-  )["arc_order"];
+    (arcObj) => arcObj.arc_name === target['first_arc']
+  )['arc_order'];
 
   if (objectArc < targetArc) {
     return 1; // Superior arc (need to apply character with higher arc appearance)
   }
   return -1; // Inferior arc (need to apply character with lower arc appearance)
+};
+
+// Function to check if todays character is within local storage characters
+export const getFoundCharFromStorage = (todaysChar, type) => {
+  const storage = JSON.parse(localStorage.getItem(type));
+  if (storage !== null) {
+    return storage.includes(todaysChar);
+  }
+  return false;
 };

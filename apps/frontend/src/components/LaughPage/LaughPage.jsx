@@ -12,10 +12,12 @@ import LaughSearchingNames from './components/LaughSearchingNames';
 import NamesList from '../UI/NamesList';
 import useGame from '../../hooks/useGame';
 import useClues from '../../hooks/useClues';
+import useTime from '../../hooks/useTime';
 
 function LaughPage() {
   const laughState = useGame('laugh');
   const cluesState = useClues('laugh');
+  const time = useTime();
 
   const audioElement = useRef();
 
@@ -41,7 +43,11 @@ function LaughPage() {
       laughState.updateAvailableCharacters,
       laughState.updateCharactersSelected
     );
-    fetchTodaysChar(laughState.updateTodaysChar);
+    fetchTodaysChar(
+      laughState.updateTodaysChar,
+      laughState.updateFoundChar,
+      cluesState
+    );
     fetchYesterdaysChar(laughState.updateYesterdaysChar);
   }, []);
 

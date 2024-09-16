@@ -8,7 +8,7 @@ function ClassicQuestionTab({ gameState, cluesState }) {
         <div className="flex justify-center items-center mt-40">
           <div
             className={`grid grid-cols-1 border-4 border-dark-grey rounded w-96 bg-light-grey text-center ${
-              gameState.numTries == 1 && 'h-36'
+              gameState.numTries == 1 && !gameState.foundChar && 'h-36'
             } p-8 space-y-5 text-dark-grey-font`}
           >
             <div className="text-lg font-semibold uppercase">
@@ -19,7 +19,7 @@ function ClassicQuestionTab({ gameState, cluesState }) {
                 Type any character to begin.
               </div>
             )}
-            {gameState.numTries > 1 && (
+            {(gameState.numTries > 1 || gameState.foundChar) && (
               <ClassicQuestionClues
                 gameState={gameState}
                 cluesState={cluesState}

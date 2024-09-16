@@ -1,15 +1,14 @@
 import { useReducer } from "react";
 import { cluesReducer } from "../reducers/cluesReducer";
-import { subtractTillZero, getTriesFromAnswers } from "../lib/utilities";
+import { subtractTillZero, getTriesFromAnswers, getFoundCharFromStorage } from "../lib/utilities";
 
-function useClues(type) {
-  const initialState = {}
+function useClues(type, todaysChar) {
+  const initialState = { todaysChar: {} }
   if (type === 'classic') {
-
-    initialState["firstApparitionClue"] = localStorage.getItem('classic_found')
+    initialState["firstApparitionClue"] = getFoundCharFromStorage(todaysChar, "classic_answers")
       ? 0
       : subtractTillZero(6, getTriesFromAnswers('classic_answers'))
-    initialState["devilFruitClue"] = localStorage.getItem('classic_found')
+    initialState["devilFruitClue"] = getFoundCharFromStorage(todaysChar, "classic_answers")
       ? 0
       : subtractTillZero(9, getTriesFromAnswers('classic_answers'))
 
@@ -18,15 +17,15 @@ function useClues(type) {
 
   } else if (type === "fruit") {
 
-    initialState["typeClue"] = localStorage.getItem('fruit_found')
+    initialState["typeClue"] = getFoundCharFromStorage(todaysChar, "fruit_answers")
       ? 0
       : subtractTillZero(4, getTriesFromAnswers('fruit_answers'))
 
-    initialState["translateClue"] = localStorage.getItem('fruit_found')
+    initialState["translateClue"] = getFoundCharFromStorage(todaysChar, "fruit_answers")
       ? 0
       : subtractTillZero(7, getTriesFromAnswers('fruit_answers'))
 
-    initialState["explanationClue"] = localStorage.getItem('fruit_found')
+    initialState["explanationClue"] = getFoundCharFromStorage(todaysChar, "fruit_answers")
       ? 0
       : subtractTillZero(13, getTriesFromAnswers('fruit_answers'))
 
@@ -35,20 +34,20 @@ function useClues(type) {
     initialState["explanationClueShow"] = false;
 
   } else if (type === "wanted") {
-    initialState["bountyClue"] = localStorage.getItem("wanted_found")
+    initialState["bountyClue"] = getFoundCharFromStorage(todaysChar, "wanted_answers")
       ? 0
       : subtractTillZero(10, getTriesFromAnswers("wanted_answers"))
 
     initialState["bountyClueShow"] = false
 
   } else if (type === "laugh") {
-    initialState["originClue"] = localStorage.getItem("laugh_found")
+    initialState["originClue"] = getFoundCharFromStorage(todaysChar, "laugh_answers")
       ? 0
       : subtractTillZero(4, getTriesFromAnswers("laugh_answers"))
 
     initialState["originClueShow"] = false
 
-    initialState["affiliationClue"] = localStorage.getItem("laugh_found")
+    initialState["affiliationClue"] = getFoundCharFromStorage(todaysChar, "laugh_answers")
       ? 0
       : subtractTillZero(9, getTriesFromAnswers("laugh_answers"))
 
@@ -123,7 +122,11 @@ function useClues(type) {
     dispatch({ type: 'show_affiliation_clue', affiliationClueShow: obj });
   };
 
-  const gameObject = { ...state }
+  const updateTodaysChar = (obj) => {
+    dispatch({ type: 'update_todays_char', todaysChar: obj });
+  };
+
+  const gameObject = { ...state, updateTodaysChar }
 
   if (type === 'classic') {
 

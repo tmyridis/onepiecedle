@@ -12,10 +12,11 @@ import WantedSearchingNames from './components/WantedSearchingNames';
 import NamesList from '../UI/NamesList';
 import useGame from '../../hooks/useGame';
 import useClues from '../../hooks/useClues';
+import useTime from '../../hooks/useTime';
 
 function WantedPage() {
   const wantedState = useGame('wanted');
-
+  const time = useTime();
   const cluesState = useClues('wanted');
 
   useEffect(() => {
@@ -24,7 +25,11 @@ function WantedPage() {
       wantedState.updateAvailableCharacters,
       wantedState.updateCharactersSelected
     );
-    fetchTodaysChar(wantedState.updateTodaysChar);
+    fetchTodaysChar(
+      wantedState.updateTodaysChar,
+      wantedState.updateFoundChar,
+      cluesState
+    );
     fetchYesterdaysChar(wantedState.updateYesterdaysChar);
   }, []);
 

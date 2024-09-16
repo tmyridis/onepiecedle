@@ -1,3 +1,9 @@
+import {
+  getFoundCharFromStorage,
+  subtractTillZero,
+  getTriesFromAnswers,
+} from '../../../lib/utilities';
+
 // Function to fetch all fruit available characters
 export const fetchFruitCharacters = async (
   charactersSelected,
@@ -5,11 +11,11 @@ export const fetchFruitCharacters = async (
   setCharactersSelected
 ) => {
   try {
-    await fetch("http://localhost:5000/fruit/characters")
+    await fetch('http://localhost:5000/fruit/characters')
       .then((result) => result.json())
       .then((characters) => {
         // Get previous characters stored in local storage
-        var fruit_answers = JSON.parse(localStorage.getItem("fruit_answers"));
+        var fruit_answers = JSON.parse(localStorage.getItem('fruit_answers'));
         console.log(characters);
 
         // Remove characters that already had been stored in local storage from available characters
@@ -44,13 +50,41 @@ export const fetchFruitCharacters = async (
 };
 
 // Function to fetch todays random character
-export const fetchTodaysChar = async (setTodaysChar) => {
+export const fetchTodaysChar = async (
+  setTodaysChar,
+  setFoundChar,
+  cluesState
+) => {
   try {
-    await fetch("http://localhost:5000/fruit/todays_char")
+    await fetch('http://localhost:5000/fruit/todays_char')
       .then((result) => result.json())
       .then((char) => {
         console.log(char);
         setTodaysChar(char);
+        const foundChar = getFoundCharFromStorage(
+          char.char_name,
+          'fruit_answers'
+        );
+        console.log(foundChar);
+        setFoundChar(foundChar);
+
+        cluesState.updateTypeClue(
+          foundChar
+            ? 0
+            : subtractTillZero(4, getTriesFromAnswers('fruit_answers'))
+        );
+
+        cluesState.updateTranslateClue(
+          foundChar
+            ? 0
+            : subtractTillZero(7, getTriesFromAnswers('fruit_answers'))
+        );
+
+        cluesState.updateExplanationClue(
+          foundChar
+            ? 0
+            : subtractTillZero(13, getTriesFromAnswers('fruit_answers'))
+        );
       });
   } catch (err) {
     console.log(err);
@@ -60,11 +94,11 @@ export const fetchTodaysChar = async (setTodaysChar) => {
 // Function to fetch yesterdays random character
 export const fetchYesterdaysChar = async (setYesterdaysChar) => {
   try {
-    await fetch("http://localhost:5000/yesterdays_char")
+    await fetch('http://localhost:5000/yesterdays_char')
       .then((result) => result.json())
       .then((char) => {
-        console.log(char["fruit_char"].char_name);
-        setYesterdaysChar(char["fruit_char"].char_name);
+        console.log(char['fruit_char'].char_name);
+        setYesterdaysChar(char['fruit_char'].char_name);
       });
   } catch (err) {
     console.log(err);

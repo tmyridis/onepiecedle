@@ -37,7 +37,7 @@ function LaughSearchingNames({ gameState, cluesState }) {
     console.log(objectComparison(item, gameState.todaysChar));
     if (objectComparison(item, gameState.todaysChar)) {
       gameState.updateFoundChar(true);
-      localStorage.setItem('laugh_found', true);
+      // localStorage.setItem('laugh_found', true);
       console.log('FOUND');
 
       cluesState.updateOriginClue(0);

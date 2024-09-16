@@ -1,3 +1,9 @@
+import {
+  getFoundCharFromStorage,
+  getTriesFromAnswers,
+  subtractTillZero,
+} from '../../../lib/utilities';
+
 // Function to fetch all classic available characters
 export const fetchClassicCharacters = async (
   charactersSelected,
@@ -46,13 +52,35 @@ export const fetchClassicCharacters = async (
 };
 
 // Function to fetch todays random character
-export const fetchTodaysChar = async (setTodaysChar) => {
+export const fetchTodaysChar = async (
+  setTodaysChar,
+  setFoundChar,
+  cluesState
+) => {
   try {
     await fetch('http://localhost:5000/classic/todays_char')
       .then((result) => result.json())
       .then((char) => {
         console.log(char);
         setTodaysChar(char);
+        const foundChar = getFoundCharFromStorage(
+          char.char_name,
+          'classic_answers'
+        );
+        console.log(foundChar);
+        setFoundChar(foundChar);
+
+        cluesState.updateFirstApparitionClue(
+          foundChar
+            ? 0
+            : subtractTillZero(6, getTriesFromAnswers('classic_answers'))
+        );
+
+        cluesState.updateDevilFruitClue(
+          foundChar
+            ? 0
+            : subtractTillZero(9, getTriesFromAnswers('classic_answers'))
+        );
       });
   } catch (err) {
     console.log(err);
@@ -79,7 +107,6 @@ export const fetchYesterdaysChar = async (setYesterdaysChar) => {
     await fetch('http://localhost:5000/yesterdays_char')
       .then((result) => result.json())
       .then((char) => {
-        console.log(char['classic_char'].char_name);
         setYesterdaysChar(char['classic_char'].char_name);
       });
   } catch (err) {

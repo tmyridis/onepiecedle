@@ -36,7 +36,7 @@ function DevilFruitSearchingNames({ gameState, cluesState }) {
     // Check if found character
     if (objectComparison(item, gameState.todaysChar)) {
       gameState.updateFoundChar(true);
-      localStorage.setItem('fruit_found', true);
+      // localStorage.setItem('fruit_found', true);
       console.log('FOUND');
 
       // Enable clues when character is found

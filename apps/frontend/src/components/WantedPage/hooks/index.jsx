@@ -1,14 +1,20 @@
+import {
+  getFoundCharFromStorage,
+  getTriesFromAnswers,
+  subtractTillZero,
+} from '../../../lib/utilities';
+
 export const fetchWantedCharacters = async (
   charactersSelected,
   setAvailableCharacters,
   setCharactersSelected
 ) => {
   try {
-    await fetch("http://localhost:5000/wanted/characters")
+    await fetch('http://localhost:5000/wanted/characters')
       .then((result) => result.json())
       .then((characters) => {
         // Get previous characters stored in local storage
-        var wanted_answers = JSON.parse(localStorage.getItem("wanted_answers"));
+        var wanted_answers = JSON.parse(localStorage.getItem('wanted_answers'));
         console.log(characters);
 
         // Remove characters that already had been stored in local storage from available characters
@@ -45,11 +51,11 @@ export const fetchWantedCharacters = async (
 // Function to fetch yesterdays random character
 export const fetchYesterdaysChar = async (setYesterdaysChar) => {
   try {
-    await fetch("http://localhost:5000/yesterdays_char")
+    await fetch('http://localhost:5000/yesterdays_char')
       .then((result) => result.json())
       .then((char) => {
-        console.log(char["wanted_char"].char_name);
-        setYesterdaysChar(char["wanted_char"].char_name);
+        console.log(char['wanted_char'].char_name);
+        setYesterdaysChar(char['wanted_char'].char_name);
       });
   } catch (err) {
     console.log(err);
@@ -57,20 +63,29 @@ export const fetchYesterdaysChar = async (setYesterdaysChar) => {
 };
 
 // Function to fetch todays random character
-export const fetchTodaysChar = async (setTodaysChar) => {
+export const fetchTodaysChar = async (
+  setTodaysChar,
+  setFoundChar,
+  cluesState
+) => {
   try {
-    await fetch("http://localhost:5000/wanted/todays_char")
+    await fetch('http://localhost:5000/wanted/todays_char')
       .then((result) => result.json())
       .then((char) => {
         console.log(char);
-        // Have to fix the random wante picture of the character by setting it in the database daily_characters
-        if (char.wanted_image.length > 1) {
-          var tempChar = char;
-          // var wantedRandomImage = tempChar["wanted_image"][0];
-          // tempChar["wanted_image"] = wantedRandomImage;
-          console.log(tempChar);
-        }
         setTodaysChar(char);
+        const foundChar = getFoundCharFromStorage(
+          char.char_name,
+          'wanted_answers'
+        );
+        console.log(foundChar);
+        setFoundChar(foundChar);
+
+        cluesState.updateBountyClue(
+          foundChar
+            ? 0
+            : subtractTillZero(10, getTriesFromAnswers('wanted_answers'))
+        );
       });
   } catch (err) {
     console.log(err);

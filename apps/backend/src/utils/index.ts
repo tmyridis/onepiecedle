@@ -57,12 +57,27 @@ const getRandomChar = async (type: string) => {
 // id's to the daily_characters table. If already updated for today => return the id's for today.
 const getTodaysUpdate = async () => {
   try {
-    const today = new Date().toISOString().split('T')[0];
-    console.log(today);
+    // const today = new Date().toISOString().split('T')[0];
+    // console.log(today);
+    const todayLocale = new Date().toLocaleString('en-US', {
+      timeZone: 'Europe/Athens',
+    });
+    const today = new Date(todayLocale);
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (dd < 10) {
+      dd = parseInt('0' + dd);
+    }
+    if (mm < 10) {
+      mm = parseInt('0' + mm);
+    }
 
+    const formattedToday = mm + '-' + dd + '-' + yyyy;
+    console.log(formattedToday);
     const checkForDate = await db.query(
       'SELECT * FROM daily_characters WHERE date = $1',
-      [today]
+      [formattedToday]
     );
     if (checkForDate.rows.length == 0) {
       console.log('NO UPDATE ON CHARACTERS FOR TODAY');
@@ -75,9 +90,15 @@ const getTodaysUpdate = async () => {
         fruitCharID,
         wantedCharID,
         laughCharID,
-        today
+        formattedToday
       );
-      return [classicCharID, fruitCharID, wantedCharID, laughCharID, today];
+      return [
+        classicCharID,
+        fruitCharID,
+        wantedCharID,
+        laughCharID,
+        formattedToday,
+      ];
     } else {
       console.log('ALREADY UPDATED FOR TODAY');
       return [

@@ -1,4 +1,4 @@
-import { CLASSIC_ACTIONS, DEVIL_FRUIT_ACTIONS, WANTED_ACTIONS, LAUGH_ACTIONS } from "../actions";
+import { UPDATE_ACTIONS, CLASSIC_ACTIONS, DEVIL_FRUIT_ACTIONS, WANTED_ACTIONS, LAUGH_ACTIONS } from "../actions";
 
 const cluesReducer = (state, action) => {
   switch (action.type) {
@@ -53,6 +53,10 @@ const cluesReducer = (state, action) => {
     }
     case LAUGH_ACTIONS.SHOW_AFFILIATION_CLUE: {
       return { ...state, affiliationClueShow: action.affiliationClueShow }
+    }
+    // TODAYS CHAR FOR SETTING CLUES
+    case UPDATE_ACTIONS.UPDATE_TODAYS_CHAR: {
+      return { ...state, todaysChar: action.todaysChar }
     }
     default:
       return state

@@ -20,7 +20,7 @@ function ColorIndicators({ gameState }) {
             style={{ cursor: 'pointer' }}
             className="size-6 hover:scale-125"
             onClick={() => {
-              gameState.setColorIndicators(false);
+              gameState.updateColorIndicators(false);
             }}
           >
             <path

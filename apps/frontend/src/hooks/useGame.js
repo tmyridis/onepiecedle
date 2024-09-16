@@ -1,21 +1,20 @@
 import { useReducer } from "react"
 import { gameReducer } from "../reducers/gameReducer"
-import { getTriesFromAnswers, subtractTillZero } from "../lib/utilities"
+import { getTriesFromAnswers, subtractTillZero, getFoundCharFromStorage } from "../lib/utilities"
 
 function useGame(type) {
   const gameAnswers = type + "_answers"
   const gameFound = type + '_found'
   const initialState = {
     numTries: getTriesFromAnswers(gameAnswers),
-    foundChar: localStorage.getItem(gameFound)
-      ? localStorage.getItem(gameFound)
-      : false,
+    foundChar: false,
     charactersSelected: [],
     availableCharacters: [],
     searchingNames: [],
     inputName: '',
     noCharacterFound: false,
-    yesterdaysChar: undefined
+    yesterdaysChar: undefined,
+    todaysChar: undefined
   };
 
   if (type === 'classic') {
@@ -44,8 +43,8 @@ function useGame(type) {
     dispatch({ type: 'update_num_tries' });
   };
 
-  const updateFoundChar = () => {
-    dispatch({ type: 'found_todays_char' });
+  const updateFoundChar = (obj) => {
+    dispatch({ type: 'found_todays_char', foundChar: obj });
   };
 
   const updateSearchingNames = (obj) => {

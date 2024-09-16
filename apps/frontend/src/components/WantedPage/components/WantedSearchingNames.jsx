@@ -37,7 +37,7 @@ function WantedSearchingNames({ gameState, cluesState }) {
     console.log(objectComparison(item, gameState.todaysChar));
     if (objectComparison(item, gameState.todaysChar)) {
       gameState.updateFoundChar(true);
-      localStorage.setItem('wanted_found', true);
+      // localStorage.setItem('wanted_found', true);
       console.log('FOUND');
 
       cluesState.updateBountyClue(0);

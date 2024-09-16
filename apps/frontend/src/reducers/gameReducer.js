@@ -19,7 +19,7 @@ const gameReducer = (state, action) => {
       return { ...state, numTries: state.numTries + 1 }
     }
     case UPDATE_ACTIONS.FOUND_TODAYS_CHARACTER: {
-      return { ...state, foundChar: true }
+      return { ...state, foundChar: action.foundChar }
     }
     case UPDATE_ACTIONS.UPDATE_CHARACTERS_SELECTED: {
       return { ...state, charactersSelected: action.charactersSelected }
