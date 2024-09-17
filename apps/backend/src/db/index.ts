@@ -10,5 +10,5 @@ const pool = new Pool({
 });
 
 export = {
-  query: (text: any, params: any) => pool.query(text, params),
+  query: (text: string, params?: any) => pool.query(text, params),
 };

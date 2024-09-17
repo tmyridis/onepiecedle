@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import ToolTip from './ToolTip';
 function RopeBar() {
   const [foundChars, setFoundChars] = useState({});
 
@@ -27,8 +28,9 @@ function RopeBar() {
       </div>
       <div className="flex justify-center absolute">
         <div
-          className="relative transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150 tooltip tooltip-top"
-          data-tip="Classic"
+          className="relative transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150"
+          data-tooltip-id="ropeTooltip"
+          data-tooltip-content="Classic"
         >
           <NavLink
             to="/classic"
@@ -47,8 +49,9 @@ function RopeBar() {
           </NavLink>
         </div>
         <div
-          className="relative transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150 tooltip tooltip-top"
-          data-tip="Devil fruit"
+          className="relative transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150"
+          data-tooltip-id="ropeTooltip"
+          data-tooltip-content="Devil fruit"
         >
           <NavLink
             to="/devilfruit"
@@ -67,8 +70,9 @@ function RopeBar() {
           </NavLink>
         </div>
         <div
-          className="transition relative ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150 tooltip tooltip-top"
-          data-tip="Wanted"
+          className="transition relative ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150"
+          data-tooltip-id="ropeTooltip"
+          data-tooltip-content="Wanted"
         >
           <NavLink
             to="/wanted"
@@ -87,8 +91,9 @@ function RopeBar() {
           </NavLink>
         </div>
         <div
-          className="transition relative ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150 tooltip tooltip-top"
-          data-tip="Laugh"
+          className="transition relative ease-in-out delay-50 hover:traslate-y-1 hover:scale-110 duration-150"
+          data-tooltip-id="ropeTooltip"
+          data-tooltip-content="Laugh"
         >
           <NavLink
             to="/laugh"
@@ -106,6 +111,7 @@ function RopeBar() {
             )}
           </NavLink>
         </div>
+        <ToolTip place="top" id="ropeTooltip" />
       </div>
     </div>
   );

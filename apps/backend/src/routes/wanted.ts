@@ -8,7 +8,11 @@ router.get('/random_char', async (req, res) => {
   try {
     const wantedCharID = await getRandomChar('wanted');
     console.log(wantedCharID);
-    const char = await getCharByID(wantedCharID, 'wanted', undefined);
+    const char = await getCharByID(
+      wantedCharID.id,
+      'wanted',
+      wantedCharID.wanted_image
+    );
     res.json(char);
   } catch (err) {
     console.log(err);
@@ -19,11 +23,28 @@ router.get('/random_char', async (req, res) => {
 // Wanted route: todays character.
 router.get('/todays_char', async (req, res) => {
   try {
-    const [classicCharID, fruitCharID, wantedCharID, laughCharID, today] =
-      await getTodaysUpdate();
-    console.log(classicCharID, fruitCharID, wantedCharID, laughCharID, today);
-    const char = await getCharByID(wantedCharID, 'wanted', undefined);
-    res.json(char);
+    const [
+      classicCharID,
+      fruitCharID,
+      wantedCharID,
+      laughCharID,
+      today,
+      clearStorage,
+    ] = await getTodaysUpdate();
+    console.log(
+      classicCharID,
+      fruitCharID,
+      wantedCharID,
+      laughCharID,
+      today,
+      clearStorage
+    );
+    const character = await getCharByID(
+      wantedCharID.id,
+      'wanted',
+      wantedCharID.wanted_image
+    );
+    res.json({ character, clearStorage });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -34,8 +55,7 @@ router.get('/todays_char', async (req, res) => {
 router.get('/characters', async (req, res) => {
   try {
     const result = await db.query(
-      'SELECT id, image, char_name, bounty, wanted_image FROM characters',
-      []
+      'SELECT id, image, char_name, bounty, wanted_image FROM characters'
     );
     console.log(result.rows);
     res.json(result.rows);

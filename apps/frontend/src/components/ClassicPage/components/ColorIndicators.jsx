@@ -1,3 +1,5 @@
+import ToolTip from '../../UI/ToolTip';
+
 function ColorIndicators({ gameState }) {
   return (
     <div
@@ -42,8 +44,8 @@ function ColorIndicators({ gameState }) {
             <div>Correct</div>
           </div>
           <div
-            className="tooltip tooltip-top"
-            data-tip="One or more properties are correct, but not all"
+            data-tooltip-id="colorIndicatorsTooltip"
+            data-tooltip-content="One or more properties are correct, but not all"
           >
             <div
               className="w-10 h-10 border-1"
@@ -59,8 +61,8 @@ function ColorIndicators({ gameState }) {
             <div>Incorrect</div>
           </div>
           <div
-            className="tooltip tooltip-top"
-            data-tip="The correct value is higher"
+            data-tooltip-id="colorIndicatorsTooltip"
+            data-tooltip-content="The correct value is higher"
           >
             <div
               className="w-10 h-10 border-1"
@@ -102,8 +104,8 @@ function ColorIndicators({ gameState }) {
             <div>Higher</div>
           </div>
           <div
-            className="tooltip tooltip-top"
-            data-tip="The correct value is lower"
+            data-tooltip-id="colorIndicatorsTooltip"
+            data-tooltip-content="The correct value is lower"
           >
             <div
               className="w-10 h-10 border-1"
@@ -147,6 +149,7 @@ function ColorIndicators({ gameState }) {
           </div>
         </div>
       </div>
+      <ToolTip id="colorIndicatorsTooltip" />
     </div>
   );
 }

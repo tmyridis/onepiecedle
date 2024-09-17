@@ -6,7 +6,11 @@ function NamesList({ gameState }) {
       {gameState.charactersSelected.toReversed().map((item) => (
         <div
           key={item.id}
-          className="rounded-lg border-2 border-black h-24 hover:scale-105"
+          className={`${
+            attributeComparison(item, gameState.todaysChar, 'char_name')
+              ? 'animate-winner'
+              : 'animate-leftRight'
+          } rounded-lg border-2 border-black h-24 hover:scale-105`}
           style={{
             backgroundColor: attributeComparison(
               item,

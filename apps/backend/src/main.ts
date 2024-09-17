@@ -25,13 +25,20 @@ app.use(express.json());
 
 const getYesterdayUpdate = async () => {
   try {
-    var today = new Date();
-    today.setDate(today.getDate() - 1);
-    var date = today.toISOString().split('T')[0];
-    console.log(date);
+    const todayLocale = new Date().toLocaleString('en-US', {
+      timeZone: 'Europe/Athens',
+    });
+    const yesterday = new Date(todayLocale);
+    yesterday.setDate(yesterday.getDate() - 1);
+    console.log(yesterday.toISOString().split('T')[0]);
+    // var today = new Date();
+    // console.log(today);
+    // today.setDate(today.getDate() - 1);
+    // var yesterday = today.toISOString().split('T')[0];
+    // console.log(yesterday);
     const checkForDate = await db.query(
       'SELECT * FROM daily_characters WHERE date = $1',
-      [date]
+      [yesterday]
     );
     if (checkForDate.rows.length == 0) {
       console.log('NO YESTERDAY CHARACTERS');
@@ -70,7 +77,7 @@ app.get('/yesterdays_char', async (req, res) => {
       await getYesterdayUpdate();
     const classic_char = await getCharacterName(classicCharID);
     const fruit_char = await getCharacterName(fruitCharID);
-    const wanted_char = await getCharacterName(wantedCharID);
+    const wanted_char = await getCharacterName(wantedCharID['id']);
     const laugh_char = await getCharacterName(laughCharID['id']);
     res.json({ classic_char, fruit_char, wanted_char, laugh_char });
   } catch (err) {
@@ -81,7 +88,7 @@ app.get('/yesterdays_char', async (req, res) => {
 
 app.get('/characters', async (req, res) => {
   try {
-    const result = await db.query('SELECT * FROM characters', []);
+    const result = await db.query('SELECT * FROM characters');
     res.json(result.rows);
   } catch (err) {
     console.log(err);

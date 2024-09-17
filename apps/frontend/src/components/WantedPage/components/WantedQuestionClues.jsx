@@ -1,16 +1,18 @@
 import { convertToBellyCurrencySystem } from '../../../lib/utilities';
+import ToolTip from '../../UI/ToolTip';
 function WantedQuestionClues({ gameState, cluesState }) {
   return (
     <>
       {gameState.numTries >= 1 && (
         <div className="flex justify-center pt-8 text-wrap">
           <button
-            className={`rounded-lg border-2 w-full tooltip tooltip-up uppercase ${
+            data-tooltip-id="cluesTooltip"
+            data-tooltip-content="The value of the character's last bounty"
+            className={`rounded-lg border-2 w-full uppercase ${
               cluesState.bountyClue <= 0
                 ? 'hover:scale-110 border-clue-border text-clue-border uppercase'
                 : 'border-disabled-clue text-disabled-clue'
             }`}
-            data-tip="The value of the character's last bounty"
             disabled={cluesState.bountyClue > 0}
             onClick={() => {
               cluesState.updateBountyClueShow(!cluesState.bountyClueShow);
@@ -38,7 +40,7 @@ function WantedQuestionClues({ gameState, cluesState }) {
         </div>
       )}
       {cluesState.bountyClueShow && (
-        <div className="flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
+        <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           <img
             className="w-3 p-0"
             src="src\assets\bountyBellyIcon.png"
@@ -50,6 +52,7 @@ function WantedQuestionClues({ gameState, cluesState }) {
           {convertToBellyCurrencySystem(gameState.todaysChar.bounty)}
         </div>
       )}
+      <ToolTip id="cluesTooltip" place="bottom" />
     </>
   );
 }

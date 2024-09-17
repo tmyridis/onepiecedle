@@ -19,11 +19,24 @@ router.get('/random_char', async (req, res) => {
 // Fruit route: todays character.
 router.get('/todays_char', async (req, res) => {
   try {
-    const [classicCharID, fruitCharID, wantedCharID, laughCharID, today] =
-      await getTodaysUpdate();
-    console.log(classicCharID, fruitCharID, wantedCharID, laughCharID, today);
-    const char = await getCharByID(fruitCharID, 'fruit', undefined);
-    res.json(char);
+    const [
+      classicCharID,
+      fruitCharID,
+      wantedCharID,
+      laughCharID,
+      today,
+      clearStorage,
+    ] = await getTodaysUpdate();
+    console.log(
+      classicCharID,
+      fruitCharID,
+      wantedCharID,
+      laughCharID,
+      today,
+      clearStorage
+    );
+    const character = await getCharByID(fruitCharID, 'fruit');
+    res.json({ character, clearStorage });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -34,8 +47,7 @@ router.get('/todays_char', async (req, res) => {
 router.get('/characters', async (req, res) => {
   try {
     const result = await db.query(
-      'SELECT id, image, char_name, devil_fruit_type, devil_fruit_name, devil_fruit_translated, devil_fruit_explanation FROM characters',
-      []
+      'SELECT id, image, char_name, devil_fruit_type, devil_fruit_name, devil_fruit_translated, devil_fruit_explanation FROM characters'
     );
     res.json(result.rows);
   } catch (err) {

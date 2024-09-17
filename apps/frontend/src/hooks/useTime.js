@@ -33,7 +33,6 @@ function useTime() {
   };
 
   useEffect(() => {
-
     const todayLocale = new Date().toLocaleString("en-US", { timeZone: "Europe/Athens" });
     const today = new Date(todayLocale)
     const yyyy = today.getFullYear();
@@ -72,7 +71,6 @@ function useTime() {
 
   useEffect(() => {
     if (state.timerEnded) {
-
       setTimeout(() => {
         localStorage.clear();
       }, 5000);

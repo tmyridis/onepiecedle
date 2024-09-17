@@ -1,14 +1,17 @@
+import ToolTip from '../../UI/ToolTip';
+
 function DevilFruitQuestionClues({ gameState, cluesState }) {
   return (
     <>
       <div className="flex pt-8 gap-x-3 text-wrap">
         <button
-          className={`rounded-lg border-2 w-1/3 tooltip tooltip-up ${
+          data-tooltip-id="cluesTooltip"
+          data-tooltip-content="The type of the fruit"
+          className={`rounded-lg border-2 w-1/3 ${
             cluesState.typeClue <= 0
               ? 'hover:scale-110 border-clue-border text-clue-border uppercase'
               : 'border-disabled-clue text-disabled-clue'
           }`}
-          data-tip="The type of the fruit"
           disabled={cluesState.typeClue > 0}
           onClick={() => {
             cluesState.updateTypeClueShow(!cluesState.typeClueShow);
@@ -36,12 +39,13 @@ function DevilFruitQuestionClues({ gameState, cluesState }) {
           )}
         </button>
         <button
-          className={`rounded-lg border-2 w-1/3 tooltip tooltip-up ${
+          data-tooltip-id="cluesTooltip"
+          data-tooltip-content="A translation of the fruit's name"
+          className={`rounded-lg border-2 w-1/3 ${
             cluesState.translateClue <= 0
               ? 'hover:scale-110 border-clue-border text-clue-border uppercase'
               : 'border-disabled-clue text-disabled-clue'
           }`}
-          data-tip="A translation of the fruit's name"
           disabled={cluesState.translateClue > 0}
           onClick={() => {
             cluesState.updateTranslateClueShow(!cluesState.translateClueShow);
@@ -69,12 +73,13 @@ function DevilFruitQuestionClues({ gameState, cluesState }) {
           )}
         </button>
         <button
-          className={`rounded-lg border-2 w-1/3 tooltip tooltip-up ${
+          data-tooltip-id="cluesTooltip"
+          data-tooltip-content="Details on what the fruit does"
+          className={`rounded-lg border-2 w-1/3 ${
             cluesState.explanationClue <= 0
               ? 'hover:scale-110 border-clue-border text-clue-border uppercase'
               : 'border-disabled-clue text-disabled-clue'
           }`}
-          data-tip="Details on what the fruit does"
           disabled={cluesState.explanationClue > 0}
           onClick={() => {
             cluesState.updateExplanationClueShow(
@@ -105,20 +110,21 @@ function DevilFruitQuestionClues({ gameState, cluesState }) {
         </button>
       </div>
       {cluesState.typeClueShow && (
-        <div className="flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
+        <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           {gameState.todaysChar.devil_fruit_type}
         </div>
       )}
       {cluesState.translateClueShow && (
-        <div className="flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
+        <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           {gameState.todaysChar.devil_fruit_translated}
         </div>
       )}
       {cluesState.explanationClueShow && (
-        <div className="flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
+        <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           {gameState.todaysChar.devil_fruit_explanation}
         </div>
       )}
+      <ToolTip id="cluesTooltip" place="bottom" />
     </>
   );
 }

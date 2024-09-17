@@ -71,11 +71,11 @@ export const fetchTodaysChar = async (
   try {
     await fetch('http://localhost:5000/laugh/todays_char')
       .then((result) => result.json())
-      .then((char) => {
-        console.log(char);
-        setTodaysChar(char);
+      .then((json) => {
+        console.log(json.character);
+        setTodaysChar(json.character);
         const foundChar = getFoundCharFromStorage(
-          char.char_name,
+          json.character.char_name,
           'laugh_answers'
         );
         console.log(foundChar);
@@ -92,6 +92,10 @@ export const fetchTodaysChar = async (
             ? 0
             : subtractTillZero(9, getTriesFromAnswers('laugh_answers'))
         );
+
+        if (json.clearStorage) {
+          localStorage.clear();
+        }
       });
   } catch (err) {
     console.log(err);

@@ -2,10 +2,10 @@ import db from '../db/index';
 
 // Function to post daily update (random classic char id, random fruit char id, wanted char id, todays date) to database
 const postDailyUpdateToDB = async (
-  classic_id: any,
-  fruit_id: any,
-  wanted_id: any,
-  laugh_id: any,
+  classic_id: number,
+  fruit_id: number,
+  wanted_id: object,
+  laugh_id: object,
   date: string
 ) => {
   try {
@@ -22,26 +22,32 @@ const postDailyUpdateToDB = async (
 // Function to get random characters for all available modes
 const getRandomChar = async (type: string) => {
   try {
-    var result: { rows?: any; id?: any; laugh?: number };
+    var result: {
+      rows?: any;
+      id?: number;
+      laugh?: number;
+      wanted_image?: number;
+    };
     if (type === 'classic') {
       result = await db.query(
-        'SELECT id, image, char_name, gender, affiliation, devil_fruit_type, haki, bounty, height, origin, first_arc, first_apparition, devil_fruit_name FROM characters ORDER BY random() LIMIT 1',
-        []
+        'SELECT id, image, char_name, gender, affiliation, devil_fruit_type, haki, bounty, height, origin, first_arc, first_apparition, devil_fruit_name FROM characters ORDER BY random() LIMIT 1'
       );
     } else if (type === 'fruit') {
       result = await db.query(
-        "SELECT id, image, char_name, devil_fruit_type, devil_fruit_name, devil_fruit_translated, devil_fruit_explanation FROM characters WHERE devil_fruit_type != 'None' ORDER BY random() LIMIT 1",
-        []
+        "SELECT id, image, char_name, devil_fruit_type, devil_fruit_name, devil_fruit_translated, devil_fruit_explanation FROM characters WHERE devil_fruit_type != 'None' ORDER BY random() LIMIT 1"
       );
     } else if (type === 'wanted') {
       result = await db.query(
-        'SELECT id, image, char_name, bounty, wanted_image FROM characters WHERE bounty > 0 ORDER BY random() LIMIT 1',
-        []
+        'SELECT id, image, char_name, bounty, wanted_image FROM characters WHERE bounty > 0 ORDER BY random() LIMIT 1'
       );
+      var randomWantedPoster = Math.floor(
+        Math.random() * result.rows[0].wanted_image.length
+      );
+      result = { id: result.rows[0].id, wanted_image: randomWantedPoster };
+      return result;
     } else if (type === 'laugh') {
       result = await db.query(
-        "SELECT id, image, char_name, affiliation, origin, laugh FROM characters WHERE laugh != '{}' ORDER BY random() LIMIT 1",
-        []
+        "SELECT id, image, char_name, affiliation, origin, laugh FROM characters WHERE laugh != '{}' ORDER BY random() LIMIT 1"
       );
       var randomLaugh = Math.floor(Math.random() * result.rows[0].laugh.length);
       result = { id: result.rows[0].id, laugh: randomLaugh };
@@ -80,6 +86,7 @@ const getTodaysUpdate = async () => {
       [formattedToday]
     );
     if (checkForDate.rows.length == 0) {
+      var clearStorage = true;
       console.log('NO UPDATE ON CHARACTERS FOR TODAY');
       var classicCharID = await getRandomChar('classic');
       var fruitCharID = await getRandomChar('fruit');
@@ -98,8 +105,10 @@ const getTodaysUpdate = async () => {
         wantedCharID,
         laughCharID,
         formattedToday,
+        clearStorage,
       ];
     } else {
+      var clearStorage = false;
       console.log('ALREADY UPDATED FOR TODAY');
       return [
         checkForDate.rows[0].classic_character_id,
@@ -107,6 +116,7 @@ const getTodaysUpdate = async () => {
         checkForDate.rows[0].wanted_character_id,
         checkForDate.rows[0].laugh_character_id,
         checkForDate.rows[0].date,
+        clearStorage,
       ];
     }
   } catch (err) {
@@ -115,7 +125,7 @@ const getTodaysUpdate = async () => {
 };
 
 // Function to return a character based on their id
-const getCharByID = async (id: any, type: string, opt: string | number) => {
+const getCharByID = async (id: number, type: string, opt: number = -1) => {
   try {
     var result: { rows: any[] };
     if (type === 'classic') {
@@ -133,12 +143,15 @@ const getCharByID = async (id: any, type: string, opt: string | number) => {
         'SELECT id, image, char_name, bounty, wanted_image FROM characters WHERE id = $1',
         [id]
       );
+      if (opt !== -1) {
+        result.rows[0].wanted_image = [result.rows[0].wanted_image[opt]];
+      }
     } else if (type === 'laugh') {
       result = await db.query(
         'SELECT id, image, char_name, affiliation, origin, laugh FROM characters WHERE id = $1',
         [id]
       );
-      if (opt !== undefined) {
+      if (opt !== -1) {
         result.rows[0].laugh = [result.rows[0].laugh[opt]];
       }
     }

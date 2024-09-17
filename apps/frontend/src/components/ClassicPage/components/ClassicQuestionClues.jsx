@@ -1,14 +1,17 @@
+import ToolTip from '../../UI/ToolTip';
+
 function ClassicQuestionClues({ gameState, cluesState }) {
   return (
     <>
       <div className="flex justify-around pt-8 text-wrap">
         <button
-          className={`rounded-lg border-2 tooltip tooltip-up w-1/3 ${
+          data-tooltip-id="cluesTooltip"
+          data-tooltip-content="The chapter and episode of the character's first apparition."
+          className={`rounded-lg border-2 w-1/3 ${
             cluesState.firstApparitionClue <= 0
               ? 'hover:scale-110 border-clue-border text-clue-border uppercase'
               : 'border-disabled-clue text-disabled-clue'
           }`}
-          data-tip="The chapter and episode of the character's first apparition."
           disabled={cluesState.firstApparitionClue > 0}
           onClick={() => {
             cluesState.updateFirstApparitionClueShow(
@@ -37,12 +40,13 @@ function ClassicQuestionClues({ gameState, cluesState }) {
           )}
         </button>
         <button
-          className={`rounded-lg border-2 w-1/3 tooltip tooltip-up ${
+          data-tooltip-id="cluesTooltip"
+          data-tooltip-content="The name, if any"
+          className={`rounded-lg border-2 w-1/3 ${
             cluesState.devilFruitClue <= 0
               ? 'hover:scale-110 border-clue-border text-clue-border uppercase'
               : 'border-disabled-clue text-disabled-clue'
           }`}
-          data-tip="The name, if any"
           disabled={cluesState.devilFruitClue > 0}
           onClick={() => {
             cluesState.updateFirstApparitionClueShow(false);
@@ -70,15 +74,16 @@ function ClassicQuestionClues({ gameState, cluesState }) {
         </button>
       </div>
       {cluesState.firstApparitionClueShow && (
-        <div className="flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
+        <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           {gameState.todaysChar.first_apparition}
         </div>
       )}
       {cluesState.devilFruitClueShow && (
-        <div className="flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
+        <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           {gameState.todaysChar.devil_fruit_name}
         </div>
       )}
+      <ToolTip place="bottom" id="cluesTooltip" />
     </>
   );
 }

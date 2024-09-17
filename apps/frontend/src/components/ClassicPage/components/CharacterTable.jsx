@@ -5,7 +5,7 @@ import {
   convertToBellyCurrencySystem,
   superiorAttribute,
 } from '../../../lib/utilities';
-
+import ToolTip from '../../UI/ToolTip';
 function CharacterTable({ gameState }) {
   return (
     <div className="pt-20 z-0 flex justify-center">
@@ -15,69 +15,69 @@ function CharacterTable({ gameState }) {
             <th scope="col" className="w-20">
               CHARACTER
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="Male, Female or Other"
-              >
-                GENDER
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="Male, Female or Other"
+            >
+              <div>GENDER</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="The character's main affiliation (crew, etc.)."
-              >
-                AFFILIATION
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="The character's main affiliation (crew, etc.)."
+            >
+              <div>AFFILIATION</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="The main fruit eaten by the character."
-              >
-                DEVIL FRUIT
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="The main fruit eaten by the character."
+            >
+              <div>DEVIL FRUIT</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="Observation, Armament, Conqueror, None"
-              >
-                HAKI
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="Observation, Armament, Conqueror, None"
+            >
+              <div>HAKI</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="The character's last bounty. If the character is deceased, it will display the last bounty when alive. If the character never had a bounty, it will display 0."
-              >
-                LAST BOUNTY
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="The character's last bounty. If the character is deceased, it will display the last bounty when alive. If the character never had a bounty, it will display 0."
+            >
+              <div>LAST BOUNTY</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="The character's height."
-              >
-                HEIGHT
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="The character's height."
+            >
+              <div>HEIGHT</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="The character's origin."
-              >
-                ORIGIN
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="The character's origin."
+            >
+              <div>ORIGIN</div>
             </th>
-            <th scope="col" className="w-20">
-              <div
-                className="tooltip tooltip-bottom"
-                data-tip="The arc in which the character first appeared."
-              >
-                FIRST ARC
-              </div>
+            <th
+              scope="col"
+              className="w-20"
+              data-tooltip-id="tableTooltip"
+              data-tooltip-content="The arc in which the character first appeared."
+            >
+              <div>FIRST ARC</div>
             </th>
           </tr>
           <tr>
@@ -114,11 +114,10 @@ function CharacterTable({ gameState }) {
           {gameState.charactersSelected.toReversed().map((item) => (
             <tr key={item.id}>
               <td className="py-4 animate-flip">
-                <div
-                  className="tooltip tooltip-bottom"
-                  data-tip={item.char_name}
-                >
+                <div>
                   <img
+                    data-tooltip-id="tableTooltip"
+                    data-tooltip-content={item.char_name}
                     src={item.image}
                     className="object-cover border-2 rounded-lg h-20 w-20 flex justify-center items-center tooltip tooltip-bottom border-dark-grey"
                   />
@@ -590,6 +589,7 @@ function CharacterTable({ gameState }) {
           ))}
         </tbody>
       </table>
+      <ToolTip id="tableTooltip" place="bottom" />
     </div>
   );
 }
