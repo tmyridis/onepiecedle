@@ -9,29 +9,34 @@ import {
   fetchFruitCharacters,
   fetchTodaysChar,
   fetchYesterdaysChar,
-} from './hooks';
-
+} from './hooks/devilFruitFetch';
 import useGame from '../../hooks/useGame';
 import useClues from '../../hooks/useClues';
 import useTime from '../../hooks/useTime';
 
 function DevilFruitPage() {
   const devilFruitState = useGame('fruit');
-  const time = useTime();
   const cluesState = useClues('fruit');
+  const time = useTime();
 
   useEffect(() => {
-    fetchFruitCharacters(
-      devilFruitState.charactersSelected,
-      devilFruitState.updateAvailableCharacters,
-      devilFruitState.updateCharactersSelected
-    );
-    fetchTodaysChar(
-      devilFruitState.updateTodaysChar,
-      devilFruitState.updateFoundChar,
-      cluesState
-    );
-    fetchYesterdaysChar(devilFruitState.updateYesterdaysChar);
+    console.log(devilFruitState);
+    console.log(cluesState);
+    const fetchData = async () => {
+      await fetchTodaysChar(
+        devilFruitState.updateTodaysChar,
+        devilFruitState.updateFoundChar,
+        devilFruitState.clearAll,
+        cluesState
+      );
+      await fetchFruitCharacters(
+        devilFruitState.charactersSelected,
+        devilFruitState.updateAvailableCharacters,
+        devilFruitState.updateCharactersSelected
+      );
+      await fetchYesterdaysChar(devilFruitState.updateYesterdaysChar);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {

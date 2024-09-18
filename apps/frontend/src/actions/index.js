@@ -7,7 +7,7 @@ const UPDATE_ACTIONS = {
   UPDATE_INPUT_NAME: 'update_input_name',
   UPDATE_NO_CHARACTER_FOUND: 'update_no_character_found',
   UPDATE_TODAYS_CHAR: 'update_todays_char',
-  UPDATE_YESTERDAYS_CHAR: 'update_yesterdays_char'
+  UPDATE_YESTERDAYS_CHAR: 'update_yesterdays_char',
 }
 
 const CLASSIC_ACTIONS = {
@@ -17,6 +17,8 @@ const CLASSIC_ACTIONS = {
   SHOW_DEVIL_FRUIT_CLUE_SHOW: 'show_devil_fruit_clue',
   SHOW_COLOR_INDICATORS: 'show_color_indicators',
   UPDATE_ARCS: 'update_arcs',
+  CLEAR_GAME: 'clear_classic_game',
+  CLEAR_CLUES: 'clear_classic_clues'
 }
 
 const DEVIL_FRUIT_ACTIONS = {
@@ -26,6 +28,8 @@ const DEVIL_FRUIT_ACTIONS = {
   SHOW_TYPE_CLUE_SHOW: 'show_type_clue',
   SHOW_TRANSLATE_CLUE_SHOW: 'show_translate_clue',
   SHOW_EXPLANATION_CLUE_SHOW: 'show_explanation_clue',
+  CLEAR_GAME: 'clear_devil_fruit_game',
+  CLEAR_CLUES: 'clear_devil_fruit_clues'
 }
 
 const WANTED_ACTIONS = {
@@ -34,6 +38,8 @@ const WANTED_ACTIONS = {
   UPDATE_BLUR_PIXELS: 'update_blur_pixels',
   UPDATE_BLUR_DISPLAY: 'update_blur_display',
   UPDATE_DISPLAY_COLORS: 'update_display_colors',
+  CLEAR_GAME: 'clear_wanted_game',
+  CLEAR_CLUES: 'clear_wanted_clues'
 }
 
 const LAUGH_ACTIONS = {
@@ -42,6 +48,8 @@ const LAUGH_ACTIONS = {
   SHOW_ORIGIN_CLUE: 'show_origin_clue',
   UPDATE_AFFILIATION_CLUE: 'update_affiliation_clue',
   SHOW_AFFILIATION_CLUE: 'show_affiliation_clue',
+  CLEAR_GAME: 'clear_laugh_game',
+  CLEAR_CLUES: 'clear_laugh_clues'
 }
 
 const TIME_ACTIONS = {

@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
 import { gameReducer } from "../reducers/gameReducer"
 import { getTriesFromAnswers, subtractTillZero, getFoundCharFromStorage } from "../lib/utilities"
 
@@ -87,6 +87,20 @@ function useGame(type) {
     dispatch({ type: 'show_color_indicators', colorIndicators: obj });
   };
 
+  const clearAllClassic = () => {
+    dispatch({
+      type: "clear_classic_game"
+    })
+  }
+
+  // DEVIL FRUIT ONLY
+
+  const clearAllDevilFruit = () => {
+    dispatch({
+      type: "clear_devil_fruit_game"
+    })
+  }
+
   // WANTED ONLY
   const updateBlurPixels = (obj) => {
     dispatch({ type: 'update_blur_pixels', blurPixels: obj });
@@ -100,10 +114,22 @@ function useGame(type) {
     dispatch({ type: 'update_display_colors', displayColors: obj });
   };
 
+  const clearAllWanted = () => {
+    dispatch({
+      type: "clear_wanted_game"
+    })
+  }
+
   // LAUGH ONLY
   const updatePlayingLaugh = (obj) => {
     dispatch({ type: 'update_playing_laugh', isPlayingLaugh: obj });
   };
+
+  const clearAllLaugh = () => {
+    dispatch({
+      type: "clear_laugh_game"
+    })
+  }
 
   const gameObject = {
     updateNoCharacterFound,
@@ -121,12 +147,17 @@ function useGame(type) {
   if (type === 'classic') {
     gameObject["updateArcs"] = updateArcs
     gameObject["updateColorIndicators"] = updateColorIndicators
+    gameObject["clearAll"] = clearAllClassic
+  } else if (type === "fruit") {
+    gameObject["clearAll"] = clearAllDevilFruit
   } else if (type === "wanted") {
+    gameObject["clearAll"] = clearAllWanted
     gameObject["updateBlurPixels"] = updateBlurPixels
     gameObject["updateBlurDisplay"] = updateBlurDisplay
     gameObject["updateDisplayColors"] = updateDisplayColors
   } else if (type === "laugh") {
     gameObject["updatePlayingLaugh"] = updatePlayingLaugh
+    gameObject["clearAll"] = clearAllLaugh
   }
 
   return gameObject

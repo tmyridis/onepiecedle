@@ -11,7 +11,7 @@ import {
   fetchArcs,
   fetchYesterdaysChar,
   fetchClassicCharacters,
-} from './hooks';
+} from './hooks/classicFetch';
 import useGame from '../../hooks/useGame';
 import useClues from '../../hooks/useClues';
 import useTime from '../../hooks/useTime';
@@ -34,18 +34,25 @@ function ClassicPage() {
   };
 
   useEffect(() => {
-    fetchClassicCharacters(
-      classicState.charactersSelected,
-      classicState.updateAvailableCharacters,
-      classicState.updateCharactersSelected
-    );
-    fetchArcs(classicState.updateArcs);
-    fetchTodaysChar(
-      classicState.updateTodaysChar,
-      classicState.updateFoundChar,
-      cluesState
-    );
-    fetchYesterdaysChar(classicState.updateYesterdaysChar);
+    console.log(classicState);
+    console.log(cluesState);
+    const fetchData = async () => {
+      await fetchTodaysChar(
+        classicState.updateTodaysChar,
+        classicState.updateFoundChar,
+        classicState.clearAll,
+        cluesState
+      );
+      await fetchArcs(classicState.updateArcs);
+      await fetchClassicCharacters(
+        classicState.charactersSelected,
+        classicState.updateAvailableCharacters,
+        classicState.updateCharactersSelected
+      );
+      fetchYesterdaysChar(classicState.updateYesterdaysChar);
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -58,7 +65,7 @@ function ClassicPage() {
           inline: 'center',
         });
       }
-    }, 2000);
+    }, 3000);
   }, [classicState.foundChar]);
 
   return (

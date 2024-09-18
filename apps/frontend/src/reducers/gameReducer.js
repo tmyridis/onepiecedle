@@ -46,39 +46,15 @@ const gameReducer = (state, action) => {
     case CLASSIC_ACTIONS.UPDATE_ARCS: {
       return { ...state, arcs: action.arcs }
     }
-    case CLASSIC_ACTIONS.UPDATE_FIRST_APPARITION_CLUE: {
-      return { ...state, firstApparitionClue: action.firstApparitionClue }
-    }
-    case CLASSIC_ACTIONS.UPDATE_DEVIL_FRUIT_CLUE: {
-      return { ...state, devilFruitClue: action.devilFruitClue }
-    }
-    case CLASSIC_ACTIONS.SHOW_FIRST_APPARITION_CLUE_SHOW: {
-      return { ...state, firstApparitionClueShow: action.firstApparitionClueShow }
-    }
-    case CLASSIC_ACTIONS.SHOW_DEVIL_FRUIT_CLUE_SHOW: {
-      return { ...state, devilFruitClueShow: action.devilFruitClueShow }
-    }
     case CLASSIC_ACTIONS.SHOW_COLOR_INDICATORS: {
       return { ...state, colorIndicators: action.colorIndicators }
     }
+    case CLASSIC_ACTIONS.CLEAR_GAME: {
+      return { ...state, numTries: 0, foundChar: false }
+    }
     // DEVIL FRUIT ACTIONS ONLY
-    case DEVIL_FRUIT_ACTIONS.UPDATE_TYPE_CLUE: {
-      return { ...state, typeClue: action.typeClue }
-    }
-    case DEVIL_FRUIT_ACTIONS.UPDATE_TRANSLATE_CLUE: {
-      return { ...state, translateClue: action.translateClue }
-    }
-    case DEVIL_FRUIT_ACTIONS.UPDATE_EXPLANATION_CLUE: {
-      return { ...state, explanationClue: action.explanationClue }
-    }
-    case DEVIL_FRUIT_ACTIONS.SHOW_TYPE_CLUE_SHOW: {
-      return { ...state, typeClueShow: action.typeClueShow }
-    }
-    case DEVIL_FRUIT_ACTIONS.SHOW_TRANSLATE_CLUE_SHOW: {
-      return { ...state, translateClueShow: action.translateClueShow }
-    }
-    case DEVIL_FRUIT_ACTIONS.SHOW_EXPLANATION_CLUE_SHOW: {
-      return { ...state, explanationClueShow: action.explanationClueShow }
+    case DEVIL_FRUIT_ACTIONS.CLEAR_GAME: {
+      return { ...state, numTries: 0, foundChar: false }
     }
     // WANTED ACTIONS ONLY
     case WANTED_ACTIONS.UPDATE_BLUR_PIXELS: {
@@ -90,9 +66,15 @@ const gameReducer = (state, action) => {
     case WANTED_ACTIONS.UPDATE_DISPLAY_COLORS: {
       return { ...state, displayColors: action.displayColors }
     }
+    case WANTED_ACTIONS.CLEAR_GAME: {
+      return { ...state, numTries: 0, foundChar: false, blurPixels: 7.5, displayColors: false, blurDisplay: true }
+    }
     // LAUGH ACTIONS ONLY
     case LAUGH_ACTIONS.UPDATE_PLAYING_LAUGH: {
       return { ...state, isPlayingLaugh: action.isPlayingLaugh }
+    }
+    case WANTED_ACTIONS.CLEAR_GAME: {
+      return { ...state, numTries: 0, foundChar: false, isPlayingLaugh: false }
     }
     default:
       return state;

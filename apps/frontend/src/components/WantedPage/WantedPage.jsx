@@ -5,7 +5,7 @@ import {
   fetchYesterdaysChar,
   fetchTodaysChar,
   fetchWantedCharacters,
-} from './hooks';
+} from './hooks/wantedFetch';
 import WantedQuestionTab from './components/WantedQuestionTab';
 import WantedSearchInput from './components/WantedSearchInput';
 import WantedSearchingNames from './components/WantedSearchingNames';
@@ -16,21 +16,28 @@ import useTime from '../../hooks/useTime';
 
 function WantedPage() {
   const wantedState = useGame('wanted');
-  const time = useTime();
   const cluesState = useClues('wanted');
+  const time = useTime();
 
   useEffect(() => {
-    fetchWantedCharacters(
-      wantedState.charactersSelected,
-      wantedState.updateAvailableCharacters,
-      wantedState.updateCharactersSelected
-    );
-    fetchTodaysChar(
-      wantedState.updateTodaysChar,
-      wantedState.updateFoundChar,
-      cluesState
-    );
-    fetchYesterdaysChar(wantedState.updateYesterdaysChar);
+    console.log(wantedState);
+    console.log(cluesState);
+    const fetchData = async () => {
+      await fetchTodaysChar(
+        wantedState.updateTodaysChar,
+        wantedState.updateFoundChar,
+        wantedState.clearAll,
+        cluesState
+      );
+      await fetchWantedCharacters(
+        wantedState.charactersSelected,
+        wantedState.updateAvailableCharacters,
+        wantedState.updateCharactersSelected
+      );
+
+      await fetchYesterdaysChar(wantedState.updateYesterdaysChar);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {

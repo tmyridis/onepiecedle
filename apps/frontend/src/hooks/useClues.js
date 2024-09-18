@@ -3,7 +3,7 @@ import { cluesReducer } from "../reducers/cluesReducer";
 import { subtractTillZero, getTriesFromAnswers, getFoundCharFromStorage } from "../lib/utilities";
 
 function useClues(type, todaysChar) {
-  const initialState = { todaysChar: {} }
+  const initialState = {}
   if (type === 'classic') {
     initialState["firstApparitionClue"] = getFoundCharFromStorage(todaysChar, "classic_answers")
       ? 0
@@ -72,6 +72,10 @@ function useClues(type, todaysChar) {
     dispatch({ type: 'show_devil_fruit_clue', devilFruitClueShow: obj });
   };
 
+  const clearCluesClassic = () => {
+    dispatch({ type: "clear_classic_clues" })
+  }
+
   // DEVIL FRUIT CLUES
   const updateTypeClue = (obj) => {
     dispatch({ type: 'update_type_clue', typeClue: obj });
@@ -97,6 +101,10 @@ function useClues(type, todaysChar) {
     dispatch({ type: 'show_explanation_clue', explanationClueShow: obj });
   };
 
+  const clearCluesDevilFruit = () => {
+    dispatch({ type: "clear_devil_fruit_clues" })
+  }
+
   // WANTED CLUES
   const updateBountyClue = (obj) => {
     dispatch({ type: 'update_bounty_clue', bountyClue: obj });
@@ -105,6 +113,10 @@ function useClues(type, todaysChar) {
   const updateBountyClueShow = (obj) => {
     dispatch({ type: 'show_bounty_clue', bountyClueShow: obj });
   };
+
+  const clearCluesWanted = () => {
+    dispatch({ type: "clear_wanted_clues" })
+  }
 
   // LAUGH CLUES
   const updateOriginClue = (obj) => {
@@ -122,11 +134,11 @@ function useClues(type, todaysChar) {
     dispatch({ type: 'show_affiliation_clue', affiliationClueShow: obj });
   };
 
-  const updateTodaysChar = (obj) => {
-    dispatch({ type: 'update_todays_char', todaysChar: obj });
-  };
+  const clearCluesLaugh = () => {
+    dispatch({ type: "clear_laugh_clues" })
+  }
 
-  const gameObject = { ...state, updateTodaysChar }
+  const gameObject = { ...state }
 
   if (type === 'classic') {
 
@@ -134,8 +146,9 @@ function useClues(type, todaysChar) {
     gameObject["updateDevilFruitClue"] = updateDevilFruitClue
     gameObject["updateFirstApparitionClueShow"] = updateFirstApparitionClueShow
     gameObject["updateDevilFruitClueShow"] = updateDevilFruitClueShow
+    gameObject["clearAll"] = clearCluesClassic
   } else if (type === "fruit") {
-
+    gameObject["clearAll"] = clearCluesDevilFruit
     gameObject["updateTypeClue"] = updateTypeClue
     gameObject["updateTranslateClue"] = updateTranslateClue
     gameObject["updateExplanationClue"] = updateExplanationClue
@@ -144,9 +157,11 @@ function useClues(type, todaysChar) {
     gameObject["updateExplanationClueShow"] = updateExplanationClueShow
 
   } else if (type === "wanted") {
+    gameObject["clearAll"] = clearCluesWanted
     gameObject["updateBountyClue"] = updateBountyClue
     gameObject["updateBountyClueShow"] = updateBountyClueShow
   } else if (type === "laugh") {
+    gameObject["clearAll"] = clearCluesLaugh
     gameObject["updateOriginClue"] = updateOriginClue
     gameObject["updateOriginClueShow"] = updateOriginClueShow
     gameObject["updateAffiliationClue"] = updateAffiliationClue

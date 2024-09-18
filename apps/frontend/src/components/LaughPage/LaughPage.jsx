@@ -5,7 +5,7 @@ import {
   fetchLaughCharacters,
   fetchTodaysChar,
   fetchYesterdaysChar,
-} from './hooks';
+} from './hooks/laughFetch';
 import LaughQuestionTab from './components/LaughQuestionTab';
 import LaughSearchInput from './components/LaughSearchInput';
 import LaughSearchingNames from './components/LaughSearchingNames';
@@ -38,17 +38,24 @@ function LaughPage() {
   }, [laughState.isPlayingLaugh]);
 
   useEffect(() => {
-    fetchLaughCharacters(
-      laughState.charactersSelected,
-      laughState.updateAvailableCharacters,
-      laughState.updateCharactersSelected
-    );
-    fetchTodaysChar(
-      laughState.updateTodaysChar,
-      laughState.updateFoundChar,
-      cluesState
-    );
-    fetchYesterdaysChar(laughState.updateYesterdaysChar);
+    console.log(laughState);
+    console.log(cluesState);
+    const fetchData = async () => {
+      await fetchTodaysChar(
+        laughState.updateTodaysChar,
+        laughState.updateFoundChar,
+        laughState.clearAll,
+        cluesState
+      );
+      await fetchLaughCharacters(
+        laughState.charactersSelected,
+        laughState.updateAvailableCharacters,
+        laughState.updateCharactersSelected
+      );
+
+      await fetchYesterdaysChar(laughState.updateYesterdaysChar);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
