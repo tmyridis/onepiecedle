@@ -1,0 +1,9 @@
+FROM postgres:latest
+
+ARG POSTGRES_USERNAME
+ARG POSTGRES_PASSWORD
+
+ENV POSTGRES_DB ${POSTGRES_USERNAME}
+ENV POSTGRES_PASSWORD ${POSTGRES_PASSWORD}
+
+COPY ./postgresql-scripts/ /docker-entrypoint-initdb.d/
