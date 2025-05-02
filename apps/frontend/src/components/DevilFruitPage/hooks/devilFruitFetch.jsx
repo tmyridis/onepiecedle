@@ -20,7 +20,7 @@ export const fetchFruitCharacters = async (
 
         // Remove characters that already had been stored in local storage from available characters
         var availableCharactersTemp = [...characters];
-        // Also save characters that already have been choosed
+        // Also save characters that already have been chosen
         var charactersSelectedTemp = charactersSelected;
 
         if (fruit_answers !== null && fruit_answers.length > 0) {
@@ -71,7 +71,7 @@ export const fetchTodaysChar = async (
           localStorage.clear();
           return;
         }
-        
+
         const foundChar = getFoundCharFromStorage(
           json.character.char_name,
           'fruit_answers'

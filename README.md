@@ -82,3 +82,7 @@ npx  nx  serve frontend
 ```
 ## TODO
 Dockerize both frontend and backend and add them all together with the postgres database for a single docker-compose.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.

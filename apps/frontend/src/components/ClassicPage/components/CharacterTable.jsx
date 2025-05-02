@@ -282,8 +282,6 @@ function CharacterTable({ gameState }) {
                   1 ? (
                     <svg
                       fill="#80201f"
-                      height="256px"
-                      width="256px"
                       version="1.1"
                       id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg"
@@ -319,8 +317,6 @@ function CharacterTable({ gameState }) {
                     ) === -1 ? (
                     <svg
                       fill="#80201f"
-                      height="256px"
-                      width="256px"
                       version="1.1"
                       id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg"
@@ -353,7 +349,7 @@ function CharacterTable({ gameState }) {
                   ) : (
                     <></>
                   )}
-                  <div className="flex absolute z-10">
+                  <div className="flex absolute z-11">
                     <img
                       className="w-3 p-0"
                       src="src\assets\bountyBellyIcon.png"
@@ -386,8 +382,6 @@ function CharacterTable({ gameState }) {
                   1 ? (
                     <svg
                       fill="#80201f"
-                      height="256px"
-                      width="256px"
                       version="1.1"
                       id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg"
@@ -423,8 +417,6 @@ function CharacterTable({ gameState }) {
                     ) === -1 ? (
                     <svg
                       fill="#80201f"
-                      height="256px"
-                      width="256px"
                       version="1.1"
                       id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg"
@@ -457,7 +449,7 @@ function CharacterTable({ gameState }) {
                   ) : (
                     <></>
                   )}
-                  <div className="absolute z-10">
+                  <div className="absolute z-11">
                     {item.height.toString().split('.')[0] +
                       'm' +
                       item.height.toString().split('.')[1].padEnd(2, '0')}
@@ -511,8 +503,6 @@ function CharacterTable({ gameState }) {
                   1 ? (
                     <svg
                       fill="#80201f"
-                      height="256px"
-                      width="256px"
                       version="1.1"
                       id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg"
@@ -548,8 +538,6 @@ function CharacterTable({ gameState }) {
                     ) === -1 ? (
                     <svg
                       fill="#80201f"
-                      height="256px"
-                      width="256px"
                       version="1.1"
                       id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg"

@@ -7,11 +7,13 @@ function ClassicSearchingNames({ gameState, cluesState }) {
     if (gameState.numTries === 0) {
       gameState.updateColorIndicators(true);
     }
+    // Get classic answers from local storage (if exist)
     var classic_answers = JSON.parse(localStorage.getItem('classic_answers'));
     console.log(classic_answers);
     if (classic_answers === null) {
       classic_answers = [];
     }
+    // Push searching character into answers
     classic_answers.push(item.char_name);
     console.log(classic_answers);
     localStorage.setItem('classic_answers', JSON.stringify(classic_answers));
