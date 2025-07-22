@@ -6,7 +6,7 @@ function MainPage() {
         <div className="transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-105 duration-150">
           <Link to="/classic">
             <div className="w-96 relative text-center">
-              <img src="src\assets\gameButtonClassic.png" />
+              <img src="/gameButtonClassic.png" />
               <div className="w-full absolute top-0 left-0 text-center mt-8">
                 <div className="text-xl font-bold text-center">Classic</div>
                 <div className="text-sm font-medium text-center">
@@ -19,7 +19,7 @@ function MainPage() {
         <div className="transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-105 duration-150">
           <Link to="/devilfruit">
             <div className="w-96 relative text-center">
-              <img src="src\assets\gameButtonFruit.png" />
+              <img src="/gameButtonFruit.png" />
               <div className="w-full absolute top-0 left-0 text-center mt-8">
                 <div className="text-xl font-bold text-center">Devil fruit</div>
                 <div className="text-sm font-medium text-center">
@@ -32,7 +32,7 @@ function MainPage() {
         <div className="transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-105 duration-150">
           <Link to="/wanted">
             <div className="w-96 relative text-center">
-              <img src="src\assets\gameButtonWanted.png" />
+              <img src="/gameButtonWanted.png" />
               <div className="w-full absolute top-0 left-0 text-center mt-8">
                 <div className="text-xl font-bold text-center">Wanted</div>
                 <div className="text-sm font-medium text-center">
@@ -45,7 +45,7 @@ function MainPage() {
         <div className="transition ease-in-out delay-50 hover:traslate-y-1 hover:scale-105 duration-150">
           <Link to="/laugh">
             <div className="w-96 relative text-center">
-              <img src="src\assets\gameButtonLaugh.png" />
+              <img src="/gameButtonLaugh.png" />
               <div className="w-full absolute top-0 left-0 text-center mt-8">
                 <div className="text-xl font-bold text-center">Laugh</div>
                 <div className="text-sm font-medium text-center">

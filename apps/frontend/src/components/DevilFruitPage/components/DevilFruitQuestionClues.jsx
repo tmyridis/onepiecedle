@@ -22,7 +22,7 @@ function DevilFruitQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets\typeClueIcon.png"
+              src="/typeClueIcon.png"
               style={{
                 filter:
                   cluesState.typeClue > 0
@@ -56,7 +56,7 @@ function DevilFruitQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets\translatedClueIcon.png"
+              src="/translatedClueIcon.png"
               style={{
                 filter:
                   cluesState.translateClue > 0
@@ -92,7 +92,7 @@ function DevilFruitQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets\explanationClueIcon.png"
+              src="/explanationClueIcon.png"
               style={{
                 filter:
                   cluesState.explanationClue > 0

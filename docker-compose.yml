@@ -10,4 +10,27 @@ services:
       - '${DB_PORT}:${DB_PORT}'
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USERNAME: ${DB_USERNAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_NAME}
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@db:5432/${DB_NAME}
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    ports:
+      - '4200:80'
+    depends_on:
+      - backend

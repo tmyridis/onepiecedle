@@ -65,7 +65,7 @@ function LoadingSpinner(props) {
       <div className="relative flex justify-center items-center">
         <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-dark-grey"></div>
         <img
-          src="src\assets\luffyQuestionMark.png"
+          src="/luffyQuestionMark.png"
           className="rounded-full h-28 w-28"
         />
       </div>

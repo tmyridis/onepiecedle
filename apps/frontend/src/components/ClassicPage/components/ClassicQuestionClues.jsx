@@ -23,7 +23,7 @@ function ClassicQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets\firstApparitionClueIcon.png"
+              src="/firstApparitionClueIcon.png"
               style={{
                 filter:
                   cluesState.firstApparitionClue > 0
@@ -56,7 +56,7 @@ function ClassicQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets\devilFruitTypeClueIcon.png"
+              src="/devilFruitTypeClueIcon.png"
               style={{
                 filter:
                   cluesState.devilFruitClue > 0

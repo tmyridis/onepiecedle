@@ -9,7 +9,7 @@ function ErrorPage(props) {
         <div className="flex justify-center items-center">
           <button className="w-96">
             <Link to="/">
-              <img src="src\assets\zoroLostErrorPage.webp" />
+              <img src="/zoroLostErrorPage.webp" />
               <div>
                 Seems like Zoro lost his way again and found himself in the
                 backrooms...

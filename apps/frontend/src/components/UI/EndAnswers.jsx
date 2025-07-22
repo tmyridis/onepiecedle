@@ -44,7 +44,7 @@ function EndAnswers({ gameState, to, type }) {
             <Link to={to}>
               {to === '/classic' && (
                 <div className="w-96 relative text-center">
-                  <img src="src\assets\gameButtonClassic.png" />
+                  <img src="/gameButtonClassic.png" />
                   <div className="w-full absolute top-0 left-0 text-center mt-8">
                     <div className="text-xl font-bold text-center">Classic</div>
                     <div className="text-sm font-medium text-center">
@@ -55,7 +55,7 @@ function EndAnswers({ gameState, to, type }) {
               )}
               {to === '/devilFruit' && (
                 <div className="w-96 relative text-center">
-                  <img src="src\assets\gameButtonFruit.png" />
+                  <img src="/gameButtonFruit.png" />
                   <div className="w-full absolute top-0 left-0 text-center mt-8">
                     <div className="text-xl font-bold text-center">
                       Devil fruit
@@ -68,7 +68,7 @@ function EndAnswers({ gameState, to, type }) {
               )}
               {to === '/wanted' && (
                 <div className="w-96 relative text-center">
-                  <img src="src\assets\gameButtonWanted.png" />
+                  <img src="/gameButtonWanted.png" />
                   <div className="w-full absolute top-0 left-0 text-center mt-8">
                     <div className="text-xl font-bold text-center">Wanted</div>
                     <div className="text-sm font-medium text-center">
@@ -80,7 +80,7 @@ function EndAnswers({ gameState, to, type }) {
               {to === '/laugh' && (
                 <div className="flex justify-center">
                   <div className="w-96 relative text-center">
-                    <img src="src\assets\gameButtonLaugh.png" />
+                    <img src="/gameButtonLaugh.png" />
                     <div className="w-full absolute top-0 left-0 text-center mt-8">
                       <div className="text-xl font-bold text-center">Laugh</div>
                       <div className="text-sm font-medium text-center">

@@ -21,7 +21,7 @@ function WantedQuestionClues({ gameState, cluesState }) {
             <div className="flex justify-center py-1">
               <img
                 className="w-10"
-                src="src\assets\bountyBellyClueIcon.png"
+                src="/bountyBellyClueIcon.png"
                 style={{
                   filter:
                     cluesState.bountyClue > 0
@@ -43,7 +43,7 @@ function WantedQuestionClues({ gameState, cluesState }) {
         <div className="animate-fade flex justify-center bg-lighter-grey rounded-lg border-1 p-4">
           <img
             className="w-3 p-0"
-            src="src\assets\bountyBellyIcon.png"
+            src="/bountyBellyIcon.png"
             style={{
               filter:
                 'brightness(0) saturate(100%) invert(31%) sepia(3%) saturate(2688%) hue-rotate(6deg) brightness(88%) contrast(87%)',

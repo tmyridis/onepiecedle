@@ -24,7 +24,7 @@ function RopeBar() {
   return (
     <div className="relative max-w-sm mx-auto">
       <div className="pt-9 absolute">
-        <img src="src\assets\ropeIcon.png"></img>
+        <img src="/ropeIcon.png"></img>
       </div>
       <div className="flex justify-center absolute">
         <div
@@ -40,10 +40,10 @@ function RopeBar() {
               };
             }}
           >
-            <img src="src\assets\gameIconClassic.png"></img>
+            <img src="/gameIconClassic.png"></img>
             {foundChars.classic_found === true && (
               <span className="absolute bottom-2 right-1">
-                <img className="w-7" src="src\assets\completedIcon.png"></img>
+                <img className="w-7" src="/completedIcon.png"></img>
               </span>
             )}
           </NavLink>
@@ -61,10 +61,10 @@ function RopeBar() {
               };
             }}
           >
-            <img src="src\assets\gameIconFruit.png"></img>
+            <img src="/gameIconFruit.png"></img>
             {foundChars.fruit_found === true && (
               <span className="absolute bottom-2 right-1">
-                <img className="w-7" src="src\assets\completedIcon.png"></img>
+                <img className="w-7" src="/completedIcon.png"></img>
               </span>
             )}
           </NavLink>
@@ -82,10 +82,10 @@ function RopeBar() {
               };
             }}
           >
-            <img src="src\assets\gameIconWanted.png"></img>
+            <img src="/gameIconWanted.png"></img>
             {foundChars.wanted_found === true && (
               <span className="absolute bottom-2 right-1">
-                <img className="w-7" src="src\assets\completedIcon.png"></img>
+                <img className="w-7" src="/completedIcon.png"></img>
               </span>
             )}
           </NavLink>
@@ -103,10 +103,10 @@ function RopeBar() {
               };
             }}
           >
-            <img src="src\assets\gameIconLaugh.png"></img>
+            <img src="/gameIconLaugh.png"></img>
             {foundChars.laugh_found === true && (
               <span className="absolute bottom-2 right-1">
-                <img className="w-7" src="src\assets\completedIcon.png"></img>
+                <img className="w-7" src="/completedIcon.png"></img>
               </span>
             )}
           </NavLink>

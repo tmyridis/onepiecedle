@@ -220,7 +220,7 @@ function CharacterTable({ gameState }) {
                     {item.haki.conqueror === true && (
                       <img
                         className="w-6 inline-block p-0 mx-0 -my-4"
-                        src="src\assets\conquerorsIcon.png"
+                        src="/conquerorsIcon.png"
                         style={{
                           overflowClipMargin: 'content-box',
                           overflow: 'clip',
@@ -230,7 +230,7 @@ function CharacterTable({ gameState }) {
                     {item.haki.armament === true && (
                       <img
                         className="w-6 inline-block p-0"
-                        src="src\assets\armamentIcon.png"
+                        src="/armamentIcon.png"
                         style={{
                           overflowClipMargin: 'content-box',
                           overflow: 'clip',
@@ -240,7 +240,7 @@ function CharacterTable({ gameState }) {
                     {item.haki.observation === true && (
                       <img
                         className="w-6 inline-block p-0"
-                        src="src\assets\observationIcon.png"
+                        src="/observationIcon.png"
                         style={{
                           overflowClipMargin: 'content-box',
                           overflow: 'clip',
@@ -252,7 +252,7 @@ function CharacterTable({ gameState }) {
                       item.haki.observation === false && (
                         <img
                           className="w-6 inline-block p-0"
-                          src="src\assets\noneHakiIcon.png"
+                          src="/noneHakiIcon.png"
                         />
                       )}
                   </div>
@@ -352,7 +352,7 @@ function CharacterTable({ gameState }) {
                   <div className="flex absolute z-11">
                     <img
                       className="w-3 p-0"
-                      src="src\assets\bountyBellyIcon.png"
+                      src="/bountyBellyIcon.png"
                     />
                     {convertToBellyCurrencySystem(item.bounty)}
                   </div>

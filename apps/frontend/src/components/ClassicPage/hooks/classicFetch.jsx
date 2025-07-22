@@ -3,7 +3,7 @@ import {
   getTriesFromAnswers,
   subtractTillZero,
 } from '../../../lib/utilities';
-
+const API_URL = import.meta.env.VITE_API_URL;
 // Function to fetch all classic available characters
 export const fetchClassicCharacters = async (
   charactersSelected,
@@ -11,7 +11,7 @@ export const fetchClassicCharacters = async (
   setCharactersSelected
 ) => {
   try {
-    await fetch('http://localhost:5000/classic/characters')
+    await fetch(`${API_URL}/classic/characters`)
       .then((result) => result.json())
       .then((characters) => {
         // Get previous characters stored in local storage
@@ -59,7 +59,7 @@ export const fetchTodaysChar = async (
   cluesState
 ) => {
   try {
-    await fetch('http://localhost:5000/classic/todays_char')
+    await fetch(`${API_URL}/classic/todays_char`)
       .then((result) => result.json())
       .then((json) => {
         console.log(json);
@@ -101,7 +101,7 @@ export const fetchTodaysChar = async (
 // Function to fetch arcs
 export const fetchArcs = async (setArcs) => {
   try {
-    await fetch('http://localhost:5000/arcs')
+    await fetch(`${API_URL}/arcs`)
       .then((result) => result.json())
       .then((arcs) => {
         console.log(arcs);
@@ -115,7 +115,7 @@ export const fetchArcs = async (setArcs) => {
 // Function to fetch yesterdays character
 export const fetchYesterdaysChar = async (setYesterdaysChar) => {
   try {
-    await fetch('http://localhost:5000/yesterdays_char')
+    await fetch(`${API_URL}/yesterdays_char`)
       .then((result) => result.json())
       .then((char) => {
         setYesterdaysChar(char['classic_char'].char_name);

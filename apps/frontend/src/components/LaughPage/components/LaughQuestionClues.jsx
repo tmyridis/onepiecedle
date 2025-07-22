@@ -21,7 +21,7 @@ function LaughQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets/originClueIcon.png"
+              src="/originClueIcon.png"
               style={{
                 filter:
                   cluesState.originClue > 0
@@ -56,7 +56,7 @@ function LaughQuestionClues({ gameState, cluesState }) {
           <div className="flex justify-center py-1">
             <img
               className="w-10"
-              src="src\assets\affiliationClueIcon.png"
+              src="/affiliationClueIcon.png"
               style={{
                 filter:
                   cluesState.affiliationClue > 0
